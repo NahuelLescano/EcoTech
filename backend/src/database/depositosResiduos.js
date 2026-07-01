@@ -15,7 +15,7 @@ export async function createDepositoResiduo(
 
 export async function getContenedorById(id) {
   const res = await pool.query(
-    "SELECT capacidad_maxima_kg, carga_actual_kg FROM ContenedoresHub where id = $1 LIMIT 1",
+    "SELECT capacidad_maxima_kg, carga_actual_kg, tipo_residuo_permitido, estado_llenado FROM ContenedoresHub where id = $1 LIMIT 1",
     [id],
   );
 
