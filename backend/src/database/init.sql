@@ -19,8 +19,8 @@ CREATE TABLE DepositosResiduos (
 CREATE TABLE OrdenesRetiros (
     id SERIAL PRIMARY KEY,
     contenedor_id INT NOT NULL REFERENCES ContenedoresHub(id),
-    empresa_recolectora VARCHAR(100) NOT NULL,
-    patente_camion VARCHAR(20) NOT NULL,
-    fecha_programada TIMESTAMP NOT NULL,
+    empresa_recolectora VARCHAR(100),
+    patente_camion VARCHAR(20),
+    fecha_programada TIMESTAMP,
     estado_orden VARCHAR(20) NOT NULL DEFAULT 'Pendiente'
 );

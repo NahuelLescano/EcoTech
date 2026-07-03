@@ -1,7 +1,7 @@
 ##
 # Ecotech - TP
 
-.PHONY: help up down logs db backend front install
+.PHONY: help backend front install
 
 help:
 	@echo "EcoTech TP Project - Available commands:"
