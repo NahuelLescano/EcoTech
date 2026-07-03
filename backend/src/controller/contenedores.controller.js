@@ -35,18 +35,18 @@ function validarPayloadBase(payload) {
   return null;
 }
 
-function normalizarTipoResiduo(tipoResiduo) {
+function validarTipoResiduo(tipoResiduo) {
   if (typeof tipoResiduo !== "string") {
     return null;
   }
 
-  const tipoNormalizado = tipoResiduo.toLowerCase();
+  const tipoResiduoValidado = tipoResiduo.toLowerCase();
 
-  if (!TIPOS_RESIDUO_VALIDOS.includes(tipoNormalizado)) {
+  if (!TIPOS_RESIDUO_VALIDOS.includes(tipoResiduoValidado)) {
     return null;
   }
 
-  return tipoNormalizado;
+  return tipoResiduoValidado;
 }
 
 // Get all contenedores
@@ -59,7 +59,7 @@ export async function getContenedores(req, res) {
 
     return res.status(200).json(result.rows);
   } catch (error) {
-    return res.status(400).json({
+    return res.status(500).json({
       message: "Error al obtener los contenedores",
       error: error.message,
     });
@@ -85,7 +85,7 @@ export async function createContenedor(req, res) {
     });
   }
 
-  const tipoResiduoPermitido = normalizarTipoResiduo(
+  const tipoResiduoPermitido = validarTipoResiduo(
     req.body.tipo_residuo_permitido,
   );
 
@@ -124,7 +124,7 @@ export async function createContenedor(req, res) {
 
     return res.status(201).json(result.rows[0]);
   } catch (error) {
-    return res.status(400).json({
+    return res.status(500).json({
       message: "Error al crear el contenedor",
       error: error.message,
     });
@@ -170,6 +170,17 @@ export async function updateContenedor(req, res) {
       }
 
       values.push(numero);
+    } else if (campo === "tipo_residuo_permitido") {
+      const tipoResiduoValidado = validarTipoResiduo(valor);
+
+      if (!tipoResiduoValidado) {
+        return res.status(400).json({
+          message:
+            "tipo_residuo_permitido debe ser uno de: plastico, carton, vidrio o metal",
+        });
+      }
+
+      values.push(tipoResiduoValidado);
     } else if (campo === "estado_llenado") {
       if (!ESTADOS_VALIDOS.includes(valor)) {
         return res.status(400).json({
@@ -199,7 +210,7 @@ export async function updateContenedor(req, res) {
 
     return res.status(200).json(result.rows[0]);
   } catch (error) {
-    return res.status(400).json({
+    return res.status(500).json({
       message: "Error al actualizar el contenedor",
       error: error.message,
     });
@@ -230,7 +241,7 @@ export async function deleteContenedor(req, res) {
       contenedor: result.rows[0],
     });
   } catch (error) {
-    return res.status(400).json({
+    return res.status(500).json({
       message: "Error al eliminar el contenedor",
       error: error.message,
     });
