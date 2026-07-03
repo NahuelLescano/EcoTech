@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import depositosRoutes from "./routes/depositos.routes.js";
 
 const app = express();
 
@@ -14,6 +15,8 @@ app.use(cors(corsOptions));
 const port = 8000;
 
 app.use(express.json());
+
+app.use("/api/depositos", depositosRoutes);
 
 app.get("/health", (req, res) => {
   res.send("OK");
