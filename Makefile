@@ -1,7 +1,7 @@
 ##
 # Ecotech - TP
 
-.PHONY: help backend front install
+.PHONY: help install back front
 
 help:
 	@echo "EcoTech TP Project - Available commands:"
@@ -18,7 +18,9 @@ back:
 	cd backend && npm run dev
 
 front:
-	npx http-server frontend -p 3000 --cors
+	npx http-server frontend -p 4000 --cors
 
-run: back front
+run:
+	@echo "Run backend API and frontend services"
+	$(MAKE) -j2 back front # Permite que la aplicacion corra sin que se pisen.
 # end
