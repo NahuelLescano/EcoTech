@@ -198,7 +198,33 @@ export async function updateContenedor(req, res) {
 
   values.push(id);
 
+  if (!req.body.capacidad_maxima_kg || !req.body.carga_actual_kg) {
+    return res.status(400).json({ message: "capacidad_maxima_kg y carga_actual_kg son obligatorios para la actualización" });
+  }
+
+  console.log("Valores para la actualización:", values);
   try {
+    const actual = await pool.query(`SELECT capacidad_maxima_kg, carga_actual_kg FROM ContenedoresHub WHERE id = $1`, [id]);
+    if (actual.rowCount === 0) {
+      return res.status(404).json({ message: "Contenedor no encontrado" });
+    }
+
+    const capacidadFinal =
+      req.body.capacidad_maxima_kg !== undefined ? parseEntero(req.body.capacidad_maxima_kg) : actual.rows[0].capacidad_maxima_kg;
+
+    const cargaFinal =
+      req.body.carga_actual_kg !== undefined ? parseEntero(req.body.carga_actual_kg) : actual.rows[0].carga_actual_kg;
+
+    if (capacidadFinal === null || cargaFinal === null) {
+      return res.status(400).json({ message: "capacidad_maxima_kg y carga_actual_kg deben ser enteros mayores o iguales a 0" });
+    }
+
+    if (cargaFinal > capacidadFinal) {
+      return res.status(400).json({
+        message: "carga_actual_kg no puede superar capacidad_maxima_kg",
+      });
+    }
+
     const result = await pool.query(
       `UPDATE ContenedoresHub SET ${setClauses.join(", ")} WHERE id = $${values.length} RETURNING id, ubicacion_barrio, tipo_residuo_permitido, capacidad_maxima_kg, carga_actual_kg, estado_llenado`,
       values,
