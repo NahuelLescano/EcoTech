@@ -202,7 +202,6 @@ export async function updateContenedor(req, res) {
     return res.status(400).json({ message: "capacidad_maxima_kg y carga_actual_kg son obligatorios para la actualización" });
   }
 
-  console.log("Valores para la actualización:", values);
   try {
     const actual = await pool.query(`SELECT capacidad_maxima_kg, carga_actual_kg FROM ContenedoresHub WHERE id = $1`, [id]);
     if (actual.rowCount === 0) {
