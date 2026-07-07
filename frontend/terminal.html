@@ -36,11 +36,64 @@
   </header>
 
   <main>
-    <section class="section">
+    <header class="section">
       <div class="container">
         <h1 class="title">Terminal del Vecino</h1>
         <p class="subtitle">Interfaz del Vecino</p>
       </div>
+    </header >
+
+    <section class="columns is-centered">
+        <div class="column is-6">
+            <form id="form-deposito">
+                <div class="field">
+                    <label class="label">ID del Contenedor</label>
+                    <div class="control">
+                        <input class="input" type="number" id="contenedorId" min="1" required placeholder="Ej: 1">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">DNI del Vecino</label>
+                    <div class="control">
+                        <input class="input" id="dniVecino" required placeholder="Ej: 12345678" maxlength="8">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Tipo de residuo</label>
+                    <div class="control">
+                        <select class="select is-rounded is-focused" id="tipoResiduo" required>
+                            <option value="" disabled selected>Seleccionar...</option>
+                            <option value="plastico">Plastico (10 pts/kg)</option>
+                            <option value="carton">Carton (5 pts/kg)</option>
+                            <option value="vidrio">Vidrio (15 pts/kg)</option>
+                            <option value="metal">Metal (20 pts/kg)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Peso (kg)</label>
+                    <div class="control">
+                        <input class="input" type="number" id="pesoIngresado" required placeholder="Ej: 2.5">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary is-fullwidth" type="submit">
+                            Registro Deposito
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div id="notificacion" class="notification is-hidden">
+                <button class="delete"></button>
+                <p id="notificacion-texto"></p>
+            </div>
+        </div>
     </section>
   </main>
 
