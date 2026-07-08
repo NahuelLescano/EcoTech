@@ -33,7 +33,8 @@ form.addEventListener("submit", async (e) => {
       body: JSON.stringify(body)
     });
 
-    const data = await res.json();
+    const contentType = res.headers.get("content-type") ?? "";
+    const data = contentType.includes("application/json") ? await res.json() : {};
     if (!res.ok) {
       mostrarNotificacion(data.message ?? "Error al registrar un deposito", "is-danger");
       return;
