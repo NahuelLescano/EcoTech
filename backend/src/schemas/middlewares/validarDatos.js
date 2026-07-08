@@ -7,7 +7,7 @@ export const middlewareValidarDeposito = (req, res, next) => {
   // Si el schema me dice que no es valido frena aca
   if (!resultado.valido) {
     return res.status(400).json({
-      mensaje: "Datos de entrada Invalidos",
+      message: "Datos de entrada Invalidos",
       errores: resultado.errores,
     });
   }
