@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000/api/depositos";
+const API_URL = "/api/depositos";
 
 const form = document.getElementById("form-deposito");
 const notification = document.getElementById("notificacion");
