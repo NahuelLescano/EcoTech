@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000/api/depositos";
+import { API_DEPOSITOS } from "../env.js";
 
 const form = document.getElementById("form-deposito");
 const notification = document.getElementById("notificacion");
@@ -25,7 +25,7 @@ form.addEventListener("submit", async (e) => {
   }
 
   try {
-    const res = await fetch(API_URL, {
+    const res = await fetch(API_DEPOSITOS, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
