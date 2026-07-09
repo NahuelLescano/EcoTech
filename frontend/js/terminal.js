@@ -36,7 +36,7 @@ form.addEventListener("submit", async (e) => {
     const contentType = res.headers.get("content-type") ?? "";
     const data = contentType.includes("application/json") ? await res.json() : {};
     if (!res.ok) {
-      mostrarNotificacion(data.message ?? "Error al registrar un deposito", "is-danger");
+      mostrarNotificacion(data.message ?? "Error al registrar un depósito", "is-danger");
       return;
     }
 
