@@ -1,0 +1,27 @@
+services:
+  ecoapi:
+    build: ./backend
+    image: backend
+    command: npx nodemon ./src/index.js
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: "db"
+      DB_PORT: "5432"
+      DB_USER: "backend_user"
+      DB_PASS: "postgres"
+      DB_NAME: "ecotech_db"
+    volumes:
+      - ./backend/src:/app/src
+      - /app/node_modules
+  db:
+    image: postgres:16
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: "backend_user"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "ecotech_db"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./backend/src/database/init.sql:/docker-entrypoint-initdb.d/schemas.sql:ro
