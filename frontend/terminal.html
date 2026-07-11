@@ -2,118 +2,123 @@
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Terminal del Vecino</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.4/css/bulma.min.css" />
-  <script type="module" defer src="js/terminal.js"></script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terminal del Vecino</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.4/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="css/hide-spinners.css">
+    <script type="module" defer src="js/terminal.js"></script>
 </head>
 
 <body>
-  <header>
-    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
-      <div class="container">
-        <div class="navbar-brand">
-          <a class="navbar-item has-text-weight-bold is-size-4" href="index.html">Eco Tech</a>
-          <button class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="main-navbar">
-            <span aria-label="true"></span>
-            <span aria-label="true"></span>
-            <span aria-label="true"></span>
-            <span aria-label="true"></span>
-          </button>
-        </div>
-        <div id="main-navbar" class="navbar-menu">
-          <div class="navbar-start">
-            <a class="navbar-item" href="index.html">Inicio</a>
-            <a class="navbar-item is-active" href="terminal.html">Terminal del Vecino</a>
-            <a class="navbar-item" href="logistica.html">Panel de Logistica</a>
-            <a class="navbar-item" href="auditoria.html">Dashboard de Auditoria</a>
-          </div>
-        </div>
-      </div>
-    </nav>
-  </header>
-
-  <main>
-    <header class="section">
-      <div class="container">
-        <h1 class="title">Terminal del Vecino</h1>
-        <p class="subtitle">Interfaz del Vecino</p>
-      </div>
+    <header>
+        <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item has-text-weight-bold is-size-4" href="index.html">Eco Tech</a>
+                    <button class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="main-navbar">
+                        <span aria-label="true"></span>
+                        <span aria-label="true"></span>
+                        <span aria-label="true"></span>
+                        <span aria-label="true"></span>
+                    </button>
+                </div>
+                <div id="main-navbar" class="navbar-menu">
+                    <div class="navbar-start">
+                        <a class="navbar-item" href="index.html">Inicio</a>
+                        <a class="navbar-item is-active" href="terminal.html">Terminal del Vecino</a>
+                        <a class="navbar-item" href="logistica.html">Panel de Logistica</a>
+                        <a class="navbar-item" href="auditoria.html">Dashboard de Auditoria</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <section class="columns is-centered">
-        <div class="column is-6">
-            <form id="form-deposito">
-                <div class="field">
-                    <label class="label" for="containerId">ID del Contenedor</label>
-                    <div class="control">
-                        <input class="input" name="containerId" type="number" id="containerId" min="1" placeholder="Ej: 1" required>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label class="label" for="dniVecino">DNI del Vecino</label>
-                    <div class="control">
-                        <input class="input" name="dniVecino" id="dniVecino" placeholder="Ej: 12345678" maxlength="8" inputmode="numeric" pattern="[0-9]{7,8}" required>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label for="tipoResiduo" class="label">Tipo de residuo</label>
-                    <div class="select is-rounded is-focused is-fullwidth">
-                        <select name="tipoResiduo" id="tipoResiduo" required>
-                            <option value="" disabled selected>Seleccionar...</option>
-                            <option value="plastico">Plastico (10 pts/kg)</option>
-                            <option value="carton">Carton (5 pts/kg)</option>
-                            <option value="vidrio">Vidrio (15 pts/kg)</option>
-                            <option value="metal">Metal (20 pts/kg)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label class="label" for="pesoIngresado">Peso (kg)</label>
-                    <div class="control">
-                        <input class="input" name="pesoIngresado" type="number" min="0.01" step="0.01" id="pesoIngresado" placeholder="Ej: 2.5" required>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <div class="control">
-                        <button class="button is-primary is-fullwidth" type="submit">
-                            Registro Depósito
-                        </button>
-                    </div>
-                </div>
-            </form>
-
-            <div id="notificacion" class="notification is-hidden">
-                <button class="delete"></button>
-                <p id="notificacion-texto"></p>
+    <main>
+        <header class="section">
+            <div class="container">
+                <h1 class="title">Terminal del Vecino</h1>
+                <p class="subtitle">Interfaz del Vecino</p>
             </div>
+        </header>
+
+        <section class="columns is-centered">
+            <div class="column is-6">
+                <form id="form-deposito">
+                    <div class="field">
+                        <label class="label" for="containerId">ID del Contenedor</label>
+                        <div class="control">
+                            <input class="input is-rounded" name="containerId" type="number" id="containerId" min="1"
+                                placeholder="Ej: 1" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label" for="dniVecino">DNI del Vecino</label>
+                        <div class="control">
+                            <input class="input is-rounded" name="dniVecino" id="dniVecino" placeholder="Ej: 12345678"
+                                maxlength="8" inputmode="numeric" pattern="[0-9]{7,8}" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="tipoResiduo" class="label">Tipo de residuo</label>
+                        <div class="select is-rounded is-focused is-fullwidth">
+                            <select name="tipoResiduo" id="tipoResiduo" required>
+                                <option value="" disabled selected>Seleccionar...</option>
+                                <option value="plastico">Plastico (10 pts/kg)</option>
+                                <option value="carton">Carton (5 pts/kg)</option>
+                                <option value="vidrio">Vidrio (15 pts/kg)</option>
+                                <option value="metal">Metal (20 pts/kg)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label" for="pesoIngresado">Peso (kg)</label>
+                        <div class="control">
+                            <input class="input is-rounded" name="pesoIngresado" type="number" id="pesoIngresado"
+                                placeholder="Ej: 2" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-primary is-fullwidth" type="submit">
+                                Registro Depósito
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div id="notificacion" class="notification is-hidden">
+                    <button class="delete"></button>
+                    <p id="notificacion-texto"></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p><strong>EcoTech</strong> - Trabajo Practico Integrador. Grupo 404 not found.</p>
         </div>
-    </section>
-  </main>
+    </footer>
 
-  <footer class="footer">
-    <div class="content has-text-centered">
-      <p><strong>EcoTech</strong> - Trabajo Practico Integrador. Grupo 404 not found.</p>
-    </div>
-  </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const burger = document.querySelector(".navbar-burger");
+            const menu = document.getElementById(burger.dataset.target);
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const burger = document.querySelector(".navbar-burger");
-      const menu = document.getElementById(burger.dataset.target);
-
-      burger.addEventListener("click", () => {
-        burger.classList.toggle("is-active");
-        menu.classList.toggle("is-active");
-      });
-    });
-  </script>
+            burger.addEventListener("click", () => {
+                burger.classList.toggle("is-active");
+                menu.classList.toggle("is-active");
+            });
+        });
+    </script>
 </body>
 
 </html>
