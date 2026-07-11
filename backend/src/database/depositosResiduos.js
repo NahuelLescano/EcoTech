@@ -18,7 +18,6 @@ export async function getContenedorById(id) {
     "SELECT capacidad_maxima_kg, carga_actual_kg, tipo_residuo_permitido, estado_llenado FROM ContenedoresHub where id = $1 LIMIT 1",
     [id],
   );
-
   return res.rows[0];
 }
 

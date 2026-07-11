@@ -92,7 +92,7 @@ export const registrarDeposito = async (req, res) => {
   } catch (error) {
     // Si algo falla, atrapamos el error
     res.status(500).json({
-      mensaje: "Error al registrar el depósito",
+      message: "Error al registrar el depósito",
       error: error.message,
     });
   }
