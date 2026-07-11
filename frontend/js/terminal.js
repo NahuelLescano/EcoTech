@@ -18,7 +18,7 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const body = {
-    contenedorId: Number(document.getElementById("contenedorId").value),
+    contenedorId: Number(document.getElementById("containerId").value),
     dniVecino: document.getElementById("dniVecino").value.trim(),
     tipoResiduo: document.getElementById("tipoResiduo").value,
     pesoIngresado: Number(document.getElementById("pesoIngresado").value),
