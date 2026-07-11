@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci # Ya existe package-lock, por eso usamos ci para instalar dependencias exactas y mas rapido
 
 COPY ./src ./src
 
