@@ -13,7 +13,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-const port = 8000;
+const PORT = process.env.PORT || 8000;
 
 app.use(express.json());
 
@@ -24,9 +24,9 @@ app.get("/health", (_req, res) => {
   res.send("OK");
 });
 
-app.listen(port, () => {
-  console.log(`EcoTechAPI available at http://localhost:${port}`);
-  console.log(`Health check available at http://localhost:${port}/health`);
-  console.log(`Depositos API available at http://localhost:${port}/api/depositos`);
-  console.log(`Contenedores API available at http://localhost:${port}/api/contenedores`);
+app.listen(PORT, () => {
+  console.log(`EcoTechAPI available at http://localhost:${PORT}`);
+  console.log(`Health check available at http://localhost:${PORT}/health`);
+  console.log(`Depositos API available at http://localhost:${PORT}/api/depositos`);
+  console.log(`Contenedores API available at http://localhost:${PORT}/contenedores`);
 });
