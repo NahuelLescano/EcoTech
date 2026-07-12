@@ -3,7 +3,21 @@ import { API_CONTENEDORES } from "../env.js";
 let contenedoresHub = [];
 const grid = document.getElementById("contenedores-grid");
 
+function calcularPorcentajeCapacidad(contenedor) {
+	const capacidadMaxima = Number(contenedor.capacidad_maxima_kg);
+	const cargaActual = Number(contenedor.carga_actual_kg);
+
+	if (!Number.isFinite(capacidadMaxima) || capacidadMaxima <= 0 || !Number.isFinite(cargaActual)) {
+		return 0;
+	}
+
+	return Math.min(100, Math.max(0, (cargaActual / capacidadMaxima) * 100));
+}
+
 function crearTarjetaContenedor(contenedor) {
+	const porcentajeCapacidad = calcularPorcentajeCapacidad(contenedor);
+	const porcentajeRedondeado = Math.round(porcentajeCapacidad);
+
 	const columna = document.createElement("div");
 	columna.className = "column is-12-mobile is-6-tablet is-4-desktop";
 
@@ -14,6 +28,13 @@ function crearTarjetaContenedor(contenedor) {
 				<p><strong>Barrio:</strong> ${contenedor.ubicacion_barrio}</p>
 				<p><strong>Residuo:</strong> ${contenedor.tipo_residuo_permitido}</p>
 				<p><strong>Estado:</strong> ${contenedor.estado_llenado}</p>
+				<div class="mt-4">
+					<p class="mb-2"><strong>Capacidad actual:</strong> ${porcentajeRedondeado}%</p>
+					<progress class="progress is-primary" value="${porcentajeCapacidad}" max="100">
+						${porcentajeRedondeado}%
+					</progress>
+					<p class="is-size-7 has-text-grey">${contenedor.carga_actual_kg} kg de ${contenedor.capacidad_maxima_kg} kg</p>
+				</div>
 			</div>
 		</div>
 	`;
