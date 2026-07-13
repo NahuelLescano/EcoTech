@@ -1,4 +1,4 @@
-import { API_ORDENES_RETIROS } from "../env.js";
+import { API_ORDENES_RETIROS, API_CONTENEDORES } from "../env.js";
 
 const tbody = document.getElementById("body-ordenes");
 const loading = document.getElementById("loading");
@@ -12,12 +12,12 @@ btnDelete.addEventListener("click", () => {
   notificacion.classList.add("is-hidden");
 });
 
-const mostrarNotificacion = (mensaje, tipo) => {
+function mostrarNotificacion(mensaje, tipo) {
   notificacionTexto.textContent = mensaje;
   notificacion.className = `notification ${tipo}`;
 };
 
-const cargarOrdenes = async () => {
+async function cargarOrdenes() {
   try {
     const res = await fetch(API_ORDENES_RETIROS);
     const contentType = res.headers.get("content-type") ?? "";
@@ -70,7 +70,7 @@ const cargarOrdenes = async () => {
   }
 };
 
-const marcarCompletada = async (id) => {
+async function marcarCompletada(id) {
   try {
     const res = await fetch(`${API_ORDENES_RETIROS}/${id}/completar`, {
       method: "PUT",
@@ -93,7 +93,6 @@ const marcarCompletada = async (id) => {
 
 
 cargarOrdenes();
-import { API_CONTENEDORES } from "../env.js";
 
 let contenedoresHub = [];
 const grid = document.getElementById("contenedores-grid");
@@ -124,22 +123,22 @@ function crearTarjetaContenedor(contenedor) {
   columna.className = "column is-12-mobile is-6-tablet is-4-desktop";
 
   columna.innerHTML = `
-		<div class="card">
-			<div class="card-content">
+    <div class="card">
+        <div class="card-content">
                 <p class="title is-5">Estacion #${escaparHtml(contenedor.id)}</p>
-				<p><strong>Barrio:</strong> ${escaparHtml(contenedor.ubicacion_barrio)}</p>
-				<p><strong>Residuo:</strong> ${escaparHtml(contenedor.tipo_residuo_permitido)}</p>
-				<p><strong>Estado:</strong> ${escaparHtml(contenedor.estado_llenado)}</p>
-				<div class="mt-4">
-					<p class="mb-2"><strong>Capacidad actual:</strong>${porcentajeRedondeado}%</p>
-					<progress class="progress is-primary" value="${porcentajeCapacidad}" max="100">
-						${porcentajeRedondeado}%
-					</progress>
-					<p class="is-size-7 has-text-grey">${escaparHtml(contenedor.carga_actual_kg)} kg de ${escaparHtml(contenedor.capacidad_maxima_kg)} kg</p>
-				</div>
-			</div>
-		</div>
-	`;
+                <p><strong>Barrio:</strong> ${escaparHtml(contenedor.ubicacion_barrio)}</p>
+                <p><strong>Residuo:</strong> ${escaparHtml(contenedor.tipo_residuo_permitido)}</p>
+                <p><strong>Estado:</strong> ${escaparHtml(contenedor.estado_llenado)}</p>
+                <div class="mt-4">
+                    <p class="mb-2"><strong>Capacidad actual:</strong>${porcentajeRedondeado}%</p>
+                    <progress class="progress is-primary" value="${porcentajeCapacidad}" max="100">
+                        ${porcentajeRedondeado}%
+                    </progress>
+                    <p class="is-size-7 has-text-grey">${escaparHtml(contenedor.carga_actual_kg)} kg de ${escaparHtml(contenedor.capacidad_maxima_kg)} kg</p>
+                </div>
+        </div>
+    </div>
+  `;
 
   return columna;
 }
