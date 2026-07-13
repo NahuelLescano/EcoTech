@@ -24,6 +24,7 @@ async function cargarOrdenes() {
     const data = contentType.includes("application/json") ? await res.json() : {};
     const { ordenes, message } = data;
     if (!res.ok) {
+      loading.classList.add("is-hidden");
       mostrarNotificacion(message ?? "Error al cargar órdenes", "is-danger");
       return;
     }
@@ -31,6 +32,7 @@ async function cargarOrdenes() {
     loading.classList.add("is-hidden");
 
     if (ordenes.length === 0) {
+      loading.classList.add("is-hidden");
       sinOrdenes.classList.remove("is-hidden");
       return;
     }
@@ -41,11 +43,11 @@ async function cargarOrdenes() {
     for (const orden of ordenes) {
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td>${orden.id}</td>
-        <td>${orden.contenedor_id}</td>
-        <td>${orden.ubicacion_barrio}</td>
-        <td>${orden.tipo_residuo_permitido}</td>
-        <td>${orden.carga_actual_kg} / ${orden.capacidad_maxima_kg}</td>
+      <td>${escaparHtml(orden.id)}</td>
+      <td>${escaparHtml(orden.contenedor_id)}</td>
+      <td>${escaparHtml(orden.ubicacion_barrio)}</td>
+      <td>${escaparHtml(orden.tipo_residuo_permitido)}</td>
+      <td>${escaparHtml(orden.carga_actual_kg)} / ${escaparHtml(orden.capacidad_maxima_kg)}</td>
         <td>
             <button class="button is-small is-success btn-completar" data-id="${orden.id}">
                 Marcar como completada
@@ -88,11 +90,10 @@ async function marcarCompletada(id) {
     cargarOrdenes();
   } catch (err) {
     mostrarNotificacion("Error al completar la orden.", "is-danger");
+  } finally {
+    loading.classList.add("is-hidden");
   }
 };
-
-
-cargarOrdenes();
 
 let contenedoresHub = [];
 const grid = document.getElementById("contenedores-grid");
@@ -180,6 +181,5 @@ async function cargarContenedoresHub() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  cargarContenedoresHub();
-});
+cargarOrdenes();
+cargarContenedoresHub();
