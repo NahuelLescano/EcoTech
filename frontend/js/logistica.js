@@ -22,9 +22,13 @@ async function cargarOrdenes() {
     const res = await fetch(API_ORDENES_RETIROS);
     const contentType = res.headers.get("content-type") ?? "";
     const data = contentType.includes("application/json") ? await res.json() : {};
-    const { ordenes, message } = data;
+    const message = data?.message;
+    const ordenes = Array.isArray(data?.ordenes) ? data.ordenes : [];
     if (!res.ok) {
       loading.classList.add("is-hidden");
+      tablaOrdenes.classList.add("is-hidden");
+      sinOrdenes.classList.add("is-hidden");
+      tbody.innerHTML = "";
       mostrarNotificacion(message ?? "Error al cargar órdenes", "is-danger");
       return;
     }
@@ -32,11 +36,13 @@ async function cargarOrdenes() {
     loading.classList.add("is-hidden");
 
     if (ordenes.length === 0) {
-      loading.classList.add("is-hidden");
+      tablaOrdenes.classList.add("is-hidden");
+      tbody.innerHTML = "";
       sinOrdenes.classList.remove("is-hidden");
       return;
     }
 
+    sinOrdenes.classList.add("is-hidden");
     tablaOrdenes.classList.remove("is-hidden");
     tbody.innerHTML = "";
 
