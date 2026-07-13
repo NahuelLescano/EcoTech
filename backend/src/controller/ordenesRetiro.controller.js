@@ -11,7 +11,7 @@ export const listarOrdenesPendientes = async (_req, res) => {
 
 export const completarOrden = async (req, res) => {
   const id = Number(req.params.id);
-  if (Number.isNaN(id) || !Number.isInteger(id) || id < 0) {
+  if (Number.isNaN(id) || !Number.isInteger(id) || id <= 0) {
     res.status(400).json({ message: "ID de orden inválido" });
     return;
   }
