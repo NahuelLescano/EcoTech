@@ -39,11 +39,40 @@
     <main>
         <section class="section">
             <div class="container">
-                <h1 class="title">Panel de Logistica</h1>
-                <p class="subtitle">Gestion de rutas y recoleccion.</p>
-
-                <div id="contenedores-grid" class="columns is-multiline"></div>
+                <h1 class="title">Órdenes de Retiro Pendientes</h1>
+                <p class="subtitle">Panel de Logística.</p>
             </div>
+
+            <div id="loading" class="has-text-centered">
+                <p>Cargando órdenes...</p>
+            </div>
+
+            <div id="sin-ordenes" class="notification is-info is-hidden">
+                <p>No hay órdenes de retiro pendientes.</p>
+            </div>
+
+            <div id="tabla-ordenes" class="is-hidden">
+                <table class="table is-fullwidth is-striped is-hoverable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Contenedor</th>
+                            <th>Barrio</th>
+                            <th>Tipo Residuos</th>
+                            <th>Carga / Capacidad</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="body-ordenes"></tbody>
+                </table>
+            </div>
+
+            <div id="notificacion" class="notification is-hidden">
+                <button class="delete"></button>
+                <p id="notificacion-texto"></p>
+            </div>
+
+            <div id="contenedores-grid" class="columns is-multiline"></div>
         </section>
     </main>
 

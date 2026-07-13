@@ -1,7 +1,7 @@
 ##
 # Ecotech - TP
 
-.PHONY: help install back up down remove logs front run
+.PHONY: help install back up down remove logs front ps run
 
 help:
 	@echo "EcoTech TP Project - Available commands:"
@@ -13,6 +13,7 @@ help:
 	@printf "%-15s %s\n" "make down"   	"- Stop backend API"
 	@printf "%-15s %s\n" "make remove"  "- Remove backend API and its volumes"
 	@printf "%-15s %s\n" "make logs"   	"- Log backend API"
+	@printf "%-15s %s\n" "make ps"   		"- List running containers"
 	@printf "%-15s %s\n" "make run"   	"- Run backend API and frontend services"
 
 install:
@@ -42,6 +43,10 @@ logs:
 front:
 	@echo "Starting frontend dev server..."
 	npx http-server frontend -p 4000 --cors
+
+ps:
+	@echo "Listing running containers..."
+	cd backend && docker compose ps
 
 run:
 	@echo "Run backend API and frontend services"
