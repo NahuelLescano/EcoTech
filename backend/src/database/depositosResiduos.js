@@ -1,4 +1,5 @@
 import { pool } from "./pool.js";
+import { createOrdenRetiro as createOrdenRetiroDb } from "./ordenesRetiro.js";
 
 export async function createDepositoResiduo(
   contenedorId,
@@ -33,8 +34,5 @@ export async function updateContenedorCargaYEstado(
 }
 
 export async function createOrdenRetiro(contenedorId) {
-  const res = await pool.query(
-    "INSERT INTO OrdenesRetiros (contenedor_id, fecha_programada) values ($1, TO_CHAR(CURRENT_DATE, 'DD/MM/YYYY'))",
-    [contenedorId],
-  );
+  return createOrdenRetiroDb({ contenedorId });
 }
