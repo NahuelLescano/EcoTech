@@ -20,7 +20,7 @@ git clone https://github.com/NahuelLescano/EcoTech.git
 cd EcoTech
 
 # Levantar backend + base de datos
-make up
+make back
 ```
 
 El backend estará disponible en `http://localhost:8000`.
@@ -50,6 +50,7 @@ make run
 | `make logs` | Ver logs del backend |
 | `make ps` | Listar containers en ejecución |
 | `make front` | Levantar frontend (http-server en puerto 4000) |
+| `make back` | Levantar backend + DB |
 | `make run` | Levantar backend y frontend en paralelo |
 | `make install` | Instalar dependencias del backend |
 
