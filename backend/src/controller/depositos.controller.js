@@ -1,6 +1,7 @@
 import {
   createDepositoResiduo,
   createOrdenRetiro,
+  getAllDepositos,
   getContenedorById,
   updateContenedorCargaYEstado,
 } from "../database/depositosResiduos.js";
@@ -93,6 +94,23 @@ export const registrarDeposito = async (req, res) => {
     // Si algo falla, atrapamos el error
     res.status(500).json({
       message: "Error al registrar el depósito",
+      error: error.message,
+    });
+  }
+};
+
+export const getDepositos = async (req, res) => {
+  try {
+    const depositos = await getAllDepositos();
+
+    if (depositos === undefined) {
+      res.sendStatus(404);
+    }
+    console.log(depositos);
+    res.status(200).json(depositos);
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error al obtener los Depositos",
       error: error.message,
     });
   }

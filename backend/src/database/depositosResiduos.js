@@ -38,3 +38,8 @@ export async function createOrdenRetiro(contenedorId) {
     [contenedorId],
   );
 }
+
+export async function getAllDepositos() {
+  const res = await pool.query("SELECT * FROM DepositosResiduos");
+  return res.rows;
+}
