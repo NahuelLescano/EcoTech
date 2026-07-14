@@ -106,7 +106,6 @@ export const getDepositos = async (req, res) => {
     if (depositos === undefined) {
       res.sendStatus(404);
     }
-    console.log(depositos);
     res.status(200).json(depositos);
   } catch (error) {
     return res.status(500).json({

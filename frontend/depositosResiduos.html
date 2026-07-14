@@ -13,6 +13,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css"
     />
+    <script type="module" defer src="js/depositoResiduos.js"></script>
   </head>
   <body>
     <header>
@@ -90,16 +91,15 @@
             <table class="table is-fullwidth is-striped is-hoverable">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>ID del Contenedor</th>
-                  <th>Grupo etario</th>
-                  <th class="has-text-right">DNI Vecino</th>
-                  <th class="has-text-right">Peso Ingresado</th>
-                  <th class="has-text-right">Puntos Otorgados</th>
-                  <th class="has-text-right">Fecha de Deposito</th>
+                  <th class="has-text-centered">ID</th>
+                  <th class="has-text-centered">ID del Contenedor</th>
+                  <th class="has-text-centered">Dni del Vecino</th>
+                  <th class="has-text-centered">Peso Ingresado</th>
+                  <th class="has-text-centered">Puntos Otorgados</th>
+                  <th class="has-text-centered">Fecha de Deposito</th>
                 </tr>
               </thead>
-              <tbody id="table-eventos"></tbody>
+              <tbody id="table-depositos"></tbody>
             </table>
           </div>
         </div>
