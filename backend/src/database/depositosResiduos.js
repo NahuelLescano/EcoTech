@@ -34,7 +34,7 @@ export async function updateContenedorCargaYEstado(
 
 export async function createOrdenRetiro(contenedorId) {
   const res = await pool.query(
-    "INSERT INTO OrdenesRetiros (contenedor_id) values ($1)",
+    "INSERT INTO OrdenesRetiros (contenedor_id, fecha_programada) values ($1, TO_CHAR(CURRENT_DATE, 'DD/MM/YYYY'))",
     [contenedorId],
   );
 }
