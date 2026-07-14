@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Depositos</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.4/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <nav
+        class="navbar is-primary"
+        role="navigation"
+        aria-label="main navigation"
+      >
+        <div class="container">
+          <div class="navbar-brand">
+            <a
+              class="navbar-item has-text-weight-bold is-size-4"
+              href="index.html"
+              >Eco Tech</a
+            >
+            <button
+              class="navbar-burger"
+              aria-label="menu"
+              aria-expanded="false"
+              data-target="main-navbar"
+            >
+              <span aria-label="true"></span>
+              <span aria-label="true"></span>
+              <span aria-label="true"></span>
+              <span aria-label="true"></span>
+            </button>
+          </div>
+          <div id="main-navbar" class="navbar-menu">
+            <div class="navbar-start">
+              <a class="navbar-item" href="index.html">Inicio</a>
+              <a class="navbar-item is-active" href="depositosResiduos.html"
+                >Depositos</a
+              >
+              <a class="navbar-item" href="logistica.html"
+                >Panel de Logistica</a
+              >
+              <a class="navbar-item" href="auditoria.html"
+                >Dashboard de Auditoria</a
+              >
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="section">
+        <div class="container">
+          <div class="level page-header is-mobile">
+            <div class="level-left">
+              <div class="level-item">
+                <div>
+                  <h1 class="title">
+                    <span class="icon-text">
+                      <span>Depositos de Residuos</span>
+                    </span>
+                  </h1>
+                  <p class="subtitle is-6 has-text-grey">
+                    Registro de deposito de basura en contenedores.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="level-right">
+              <div class="level-item">
+                <a href="deposito-nuevo.html" class="button is-primary">
+                  <span>Nuevo Deposito</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <p id="error" class="has-text-danger mb-3"></p>
+
+          <div class="box">
+            <table class="table is-fullwidth is-striped is-hoverable">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>ID del Contenedor</th>
+                  <th>Grupo etario</th>
+                  <th class="has-text-right">DNI Vecino</th>
+                  <th class="has-text-right">Peso Ingresado</th>
+                  <th class="has-text-right">Puntos Otorgados</th>
+                  <th class="has-text-right">Fecha de Deposito</th>
+                </tr>
+              </thead>
+              <tbody id="table-eventos"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
