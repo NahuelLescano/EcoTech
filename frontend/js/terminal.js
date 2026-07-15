@@ -1,9 +1,9 @@
 import { API_DEPOSITOS } from "../env.js";
 
-const form             = document.getElementById("form-deposito");
-const notification     = document.getElementById("notificacion");
+const form = document.getElementById("form-deposito");
+const notification = document.getElementById("notificacion");
 const notificationText = document.getElementById("notificacion-texto");
-const btnDelete        = notification.querySelector(".delete");
+const btnDelete = notification.querySelector(".delete");
 
 btnDelete.addEventListener("click", () => {
   notification.classList.add("is-hidden");
@@ -11,7 +11,8 @@ btnDelete.addEventListener("click", () => {
 
 const mostrarNotificacion = (mensaje, tipo) => {
   notificationText.textContent = mensaje;
-  notification.className = `notification ${tipo}`;
+  notification.classList.remove("is-hidden");
+  notification.classList.add("notification", tipo);
 };
 
 form.addEventListener("submit", async (e) => {
