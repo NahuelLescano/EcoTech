@@ -71,6 +71,7 @@ ecotech-tp/
 │   ├── index.html              # Inicio
 │   ├── terminal.html           # Terminal del Vecino
 │   ├── logistica.html          # Panel de Logística
+│   ├── ordenes-retiro.html     # Gestión de Órdenes de Retiro
 │   ├── auditoria.html          # Dashboard de Auditoría
 │   ├── js/                     # Lógica por vista
 │   ├── css/
@@ -134,8 +135,13 @@ ecotech-tp/
 
 | Método | Ruta | Descripción |
 |--------|------|-------------|
-| GET | `/api/ordenes-retiros` | Listar órdenes pendientes |
+| GET | `/api/ordenes-retiros` | Listar todas las órdenes |
+| GET | `/api/ordenes-retiros/pendientes` | Listar órdenes pendientes |
+| POST | `/api/ordenes-retiros` | Crear orden de retiro |
+| PUT | `/api/ordenes-retiros/:id` | Actualizar orden de retiro |
+| DELETE | `/api/ordenes-retiros/:id` | Eliminar orden de retiro |
 | PUT | `/api/ordenes-retiros/:id/completar` | Marcar orden como completada |
+| DELETE | `/api/ordenes-retiros/:id/despachar` | Despachar orden (vaciar contenedor + eliminar) |
 
 ### Health Check
 
@@ -148,7 +154,9 @@ ecotech-tp/
 - **Cálculo de puntos**: Cada tipo de residuo otorga puntos por kg (plástico: 10, cartón: 5, vidrio: 15, metal: 20)
 - **Disparador automático**: Si un depósito supera el 90% de capacidad, el contenedor cambia a estado `Lleno` y se crea automáticamente una `OrdenRetiro` con estado `Pendiente`
 - **Bloqueo**: No se permiten depósitos en contenedores con estado `Lleno`
-- **Reset de inventario**: Al completar una orden de retiro, la carga del contenedor se resetea a 0 y su estado vuelve a `Vacante`
+- **Completar orden**: Marca la orden como `Completada` sin modificar el contenedor. Solo se puede completar si el contenedor tiene carga
+- **Despachar orden**: Resetea la carga del contenedor a 0, cambia su estado a `Vacante` y elimina la orden. Solo se puede despachar si la orden está en estado `Completada`
+- **Programar retiro**: No se puede programar un retiro si el contenedor está vacío (`Vacante`)
 
 ## Stack Tecnológico
 
@@ -159,4 +167,4 @@ ecotech-tp/
 
 ## Autores
 
-Grupo 404 not found - Universidad de Buenos Aires
+Grupo 404 not found -  Intro al Desarrollo de Software (FIUBA).
