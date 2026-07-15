@@ -5,101 +5,119 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Terminal del Vecino</title>
+    <title>Terminal del Vecino - EcoTech</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.4/css/bulma.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
     <link rel="stylesheet" href="css/hide-spinners.css">
     <script type="module" defer src="js/terminal.js"></script>
 </head>
 
-<body>
+<body class="is-flex is-flex-direction-column" style="min-height: 100hv;">
     <header>
         <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
-            <div class="container">
+            <div class="container is-fluid">
                 <div class="navbar-brand">
-                    <a class="navbar-item has-text-weight-bold is-size-4" href="index.html">Eco Tech</a>
+                    <a class="navbar-item has-text-weight-bold is-size-4" href="index.html">
+                        Eco Tech<i class="fa-solid fa-leaf mr-2"></i>
+                    </a>
                     <button class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="main-navbar">
-                        <span aria-label="true"></span>
-                        <span aria-label="true"></span>
-                        <span aria-label="true"></span>
-                        <span aria-label="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
                     </button>
                 </div>
                 <div id="main-navbar" class="navbar-menu">
-                    <div class="navbar-start">
-                        <a class="navbar-item" href="index.html">Inicio</a>
-                        <a class="navbar-item is-active" href="terminal.html">Terminal del Vecino</a>
-                        <a class="navbar-item" href="logistica.html">Panel de Logistica</a>
-                        <a class="navbar-item" href="ordenes-retiro.html">Ordenes de Retiro</a>
-                        <a class="navbar-item" href="auditoria.html">Dashboard de Auditoria</a>
+                    <div class="navbar-end">
+                        <a class="navbar-item has-text-weight-bold" href="index.html">Inicio</a>
+                        <a class="navbar-item has-text-weight-bold is-active" href="terminal.html">Terminal del
+                            Vecino</a>
+                        <a class="navbar-item has-text-weight-bold" href="logistica.html">Panel de Logistica</a>
+                        <a class="navbar-item has-text-weight-bold" href="ordenes-retiro.html">Ordenes de retiro</a>
+                        <a class="navbar-item has-text-weight-bold" href="auditoria.html">Dashboard de Auditoria</a>
                     </div>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main>
-        <header class="section">
-            <div class="container">
-                <h1 class="title">Terminal del Vecino</h1>
-                <p class="subtitle">Interfaz del Vecino</p>
-            </div>
-        </header>
+    <main class="is-flex-grow-1 py-5">
+        <section class="container">
+            <header class="has-text-centered mb-5">
+                <h1 class="title is-2 mb-2">Terminal del Vecino</h1>
+                <p class="subtitle is-5 has-text-grey">Interfaz del Vecino</p>
+            </header>
 
-        <section class="columns is-centered">
-            <div class="column is-6">
-                <form id="form-deposito">
-                    <div class="field">
-                        <label class="label" for="containerId">ID del Contenedor</label>
-                        <div class="control">
-                            <input class="input is-rounded" name="containerId" type="number" id="containerId" min="1"
-                                placeholder="Ej: 1" required>
+            <section class="columns is-centered px-3">
+                <div class="column is-6-desktop is-8-tablet">
+                    <form id="form-deposito" class="box p-5 mb-4" style="border-top: 4px solid #00d1b2;">
+                        <div class="field">
+                            <label class="label" for="containerId">ID del Contenedor</label>
+                            <div class="control has-icons-left">
+                                <input class="input is-rounded" name="containerId" type="number" id="containerId"
+                                    min="1" placeholder="Ej: 1" required>
+                                <span class="icon is-small is-left">
+                                    <i class="fa-solid fa-dumpster"></i>
+                                </span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="field">
-                        <label class="label" for="dniVecino">DNI del Vecino</label>
-                        <div class="control">
-                            <input class="input is-rounded" name="dniVecino" id="dniVecino" placeholder="Ej: 12345678"
-                                maxlength="8" inputmode="numeric" pattern="[0-9]{7,8}" required>
+                        <div class="field">
+                            <label class="label" for="dniVecino">DNI del Vecino</label>
+                            <div class="control has-icons-left">
+                                <input class="input is-rounded" name="dniVecino" id="dniVecino"
+                                    placeholder="Ej: 12345678" maxlength="8" inputmode="numeric" pattern="[0-9]{7,8}"
+                                    required>
+                                <span class="icon is-small is-left">
+                                    <i class="fa-solid fa-id-card"></i>
+                                </span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="field">
-                        <label for="tipoResiduo" class="label">Tipo de residuo</label>
-                        <div class="select is-rounded is-focused is-fullwidth">
-                            <select name="tipoResiduo" id="tipoResiduo" required>
-                                <option value="" disabled selected>Seleccionar...</option>
-                                <option value="plastico">Plastico (10 pts/kg)</option>
-                                <option value="carton">Carton (5 pts/kg)</option>
-                                <option value="vidrio">Vidrio (15 pts/kg)</option>
-                                <option value="metal">Metal (20 pts/kg)</option>
-                            </select>
+                        <div class="field">
+                            <label for="tipoResiduo" class="label">Tipo de residuo</label>
+                            <div class="control has-icons-left">
+                                <div class="select is-rounded is-focused is-fullwidth">
+                                    <select name="tipoResiduo" id="tipoResiduo" required>
+                                        <option value="" disabled selected>Seleccionar...</option>
+                                        <option value="plastico">Plastico (10 pts/kg)</option>
+                                        <option value="carton">Carton (5 pts/kg)</option>
+                                        <option value="vidrio">Vidrio (15 pts/kg)</option>
+                                        <option value="metal">Metal (20 pts/kg)</option>
+                                    </select>
+                                </div>
+                                <span class="icon is-small is-left">
+                                    <i class="fa-solid fa-recycle"></i>
+                                </span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="field">
-                        <label class="label" for="pesoIngresado">Peso (kg)</label>
-                        <div class="control">
-                            <input class="input is-rounded" name="pesoIngresado" type="number" id="pesoIngresado"
-                                placeholder="Ej: 2" required>
+                        <div class="field mb-5">
+                            <label class="label" for="pesoIngresado">Peso (kg)</label>
+                            <div class="control has-icons-left">
+                                <input class="input is-rounded" name="pesoIngresado" type="number" id="pesoIngresado"
+                                    placeholder="Ej: 2" required>
+                                <span class="icon is-small is-left">
+                                    <i class="fa-solid fa-weight-scale"></i>
+                                </span>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="field">
-                        <div class="control">
-                            <button class="button is-primary is-fullwidth" type="submit">
-                                Registro Depósito
-                            </button>
+                        <div class="field">
+                            <div class="control">
+                                <button class="button is-primary is-rounded is-fullwidth has-text-weight-bold"
+                                    type="submit">
+                                    <i class="fa-solid fa-paper-plane mr-2"></i> Registro Depósito
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
 
-                <div id="notificacion" class="notification is-hidden">
-                    <button class="delete"></button>
-                    <p id="notificacion-texto"></p>
+                    <div id="notificacion" class="notification is-hidden">
+                        <button class="delete"></button>
+                        <p id="notificacion-texto"></p>
+                    </div>
                 </div>
-            </div>
+            </section>
         </section>
     </main>
 

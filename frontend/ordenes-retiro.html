@@ -8,77 +8,96 @@
     <title>Ordenes de Retiro - Eco Tech</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.4/css/bulma.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="css/hide-spinners.css">
     <script type="module" defer src="js/ordenes-retiro.js"></script>
 </head>
 
-<body>
+<body class="is-flex is-flex-direction-column" style="min-height: 100vh;">
     <header>
         <nav class="navbar is-primary" aria-label="main navigation">
-            <div class="container">
+            <div class="container is-fluid">
                 <div class="navbar-brand">
-                    <a class="navbar-item has-text-weight-bold is-size-4" href="index.html">Eco Tech</a>
+                    <a class="navbar-item has-text-weight-bold is-size-4" href="index.html">
+                        Eco Tech<i class="fa-solid fa-leaf"></i></a>
+                    </a>
                     <button class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="main-navbar">
-                        <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
                     </button>
                 </div>
                 <div id="main-navbar" class="navbar-menu">
-                    <div class="navbar-start">
-                        <a class="navbar-item" href="index.html">Inicio</a>
-                        <a class="navbar-item" href="terminal.html">Terminal del Vecino</a>
-                        <a class="navbar-item" href="logistica.html">Panel de Logistica</a>
-                        <a class="navbar-item is-active" href="ordenes-retiro.html">Ordenes de Retiro</a>
-                        <a class="navbar-item" href="auditoria.html">Dashboard de Auditoria</a>
+                    <div class="navbar-end">
+                        <a class="navbar-item has-text-weight-bold" href="index.html">Inicio</a>
+                        <a class="navbar-item has-text-weight-bold" href="terminal.html">Terminal del Vecino</a>
+                        <a class="navbar-item has-text-weight-bold" href="logistica.html">Panel de Logistica</a>
+                        <a class="navbar-item has-text-weight-bold is-active" href="ordenes-retiro.html">Ordenes de
+                            Retiro</a>
+                        <a class="navbar-item has-text-weight-bold" href="auditoria.html">Dashboard de Auditoria</a>
                     </div>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main>
+    <main class="is-flex-grow-1">
         <section class="section">
-            <div class="container">
-                <h1 class="title">Ordenes de Retiro</h1>
-                <p class="subtitle">Alta, edición y eliminación de órdenes programadas.</p>
+            <div class="container is-fluid has-text-centered mb-6">
+                <h1 class="title is-2 mb-2">
+                    <i class="fa-solid fa-clipboard-list has-text-primary mr-3"></i>Ordenes de Retiro
+                </h1>
+                <p class="subtitle is-5 has-text-grey">Alta, edición y eliminación de órdenes programadas.</p>
             </div>
+
+            <hr class="has-background-light mb-6">
 
             <div class="columns is-variable is-6">
                 <div class="column is-4">
-                    <div class="box">
+                    <div class="box p-5 mb-4" style="border-top: 4px solid #00d1b2;">
                         <h2 class="title is-5" id="form-title">Programar retiro</h2>
                         <form id="form-orden">
                             <input type="hidden" id="ordenId" />
                             <div class="field">
                                 <label class="label" for="contenedorId">Contenedor</label>
-                                <div class="control">
-                                    <input class="input" id="contenedorId" type="number" min="1" placeholder="Ej: 1"
-                                        required>
+                                <div class="control has-icons-left">
+                                    <input class="input is-rounded" id="contenedorId" type="number" min="1"
+                                        placeholder="Ej: 1" required>
+                                    <span class="icon is-small is-left">
+                                        <i class="fa-solid fa-dumpster"></i>
+                                    </span>
                                 </div>
                             </div>
 
                             <div class="field">
                                 <label class="label" for="empresaRecolectora">Empresa recolectora</label>
-                                <div class="control">
-                                    <input class="input" id="empresaRecolectora" type="text" maxlength="100"
+                                <div class="control has-icons-left">
+                                    <input class="input is-rounded" id="empresaRecolectora" type="text" maxlength="100"
                                         placeholder="Ej: Recolectora Norte" required>
+                                    <span class="icon is-small is-left">
+                                        <i class="fa-solid fa-building"></i>
+                                    </span>
                                 </div>
                             </div>
 
                             <div class="field">
                                 <label class="label" for="patenteCamion">Patente del camión</label>
-                                <div class="control">
-                                    <input class="input" id="patenteCamion" type="text" maxlength="20"
+                                <div class="control has-icons-left">
+                                    <input class="input is-rounded" id="patenteCamion" type="text" maxlength="20"
                                         placeholder="Ej: ABC123" required>
+                                    <span class="icon is-small is-left">
+                                        <i class="fa-solid fa-truck"></i>
+                                    </span>
                                 </div>
                             </div>
 
                             <div class="field">
                                 <label class="label" for="fechaProgramada">Fecha programada</label>
-                                <div class="control">
-                                    <input class="input" id="fechaProgramada" type="date" inputmode="numeric"
-                                        placeholder="DD/MM/AAAA" required>
+                                <div class="control has-icons-left">
+                                    <input class="input is-rounded" id="fechaProgramada" type="date" inputmode="numeric"
+                                        required>
+                                    <span class="icon is-small is-left">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                    </span>
                                 </div>
                             </div>
 
@@ -112,7 +131,7 @@
                         </div>
 
                         <div class="table-container">
-                            <table class="table is-fullwidth is-striped is-hoverable">
+                            <table class="table is-fullwidth is-striped is-hoverable is-narrow">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -137,8 +156,8 @@
         </section>
     </main>
 
-    <footer class="footer">
-        <div class="content has-text-centered">
+    <footer class="footer is-flex is-align-items-center is-justify-content-center" style="height: 50px;">
+        <div class="content has-text-centered m-0">
             <p><strong>EcoTech</strong> - Trabajo Practico Integrador. Grupo 404 not found.</p>
         </div>
     </footer>

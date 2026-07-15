@@ -5,49 +5,54 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard de Auditoria</title>
+    <title>Dashboard de Auditoria - EcoTech</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.4/css/bulma.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
     <script type="module" defer src="js/auditoria.js"></script>
 </head>
 
-<body>
+<body class="is-flex is-flex-direction-column" style="min-height: 100hv;">
     <header>
         <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
-            <div class="container">
+            <div class="container is-fluid">
                 <div class="navbar-brand">
-                    <a class="navbar-item has-text-weight-bold is-size-4" href="index.html">Eco Tech</a>
+                    <a class="navbar-item has-text-weight-bold is-size-4" href="index.html">
+                        Eco Tech<i class="fa-solid fa-leaf"></i>
+                    </a>
                     <button class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="main-navbar">
-                        <span aria-label="true"></span>
-                        <span aria-label="true"></span>
-                        <span aria-label="true"></span>
-                        <span aria-label="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
                     </button>
                 </div>
                 <div id="main-navbar" class="navbar-menu">
-                    <div class="navbar-start">
-                        <a class="navbar-item" href="index.html">Inicio</a>
-                        <a class="navbar-item" href="terminal.html">Terminal del Vecino</a>
-                        <a class="navbar-item" href="logistica.html">Panel de Logistica</a>
-                        <a class="navbar-item" href="ordenes-retiro.html">Ordenes de Retiro</a>
-                        <a class="navbar-item is-active" href="auditoria.html">Dashboard de Auditoria</a>
+                    <div class="navbar-end">
+                        <a class="navbar-item has-text-weight-bold" href="index.html">Inicio</a>
+                        <a class="navbar-item has-text-weight-bold" href="terminal.html">Terminal del Vecino</a>
+                        <a class="navbar-item has-text-weight-bold" href="logistica.html">Panel de Logistica</a>
+                        <a class="navbar-item has-text-weight-bold" href="ordenes-retiro.html">Ordenes de retiro</a>
+                        <a class="navbar-item has-text-weight-bold is-active" href="auditoria.html">Dashboard de
+                            Auditoria</a>
                     </div>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main>
+    <main class="is-flex-grow-1 is-flex is-align-items-center is-justify-content-center">
         <section class="section">
-            <div class="container">
-                <h1 class="title">Dashboard de Auditoria</h1>
-                <p class="subtitle">Monitoreo y control de actividad.</p>
+            <div class="container has-text-centered box p-6" style="max-width: 600px; border-top: 4px solid #00d1b2;">
+                <div class="block is-size-1 mb-4">
+                    <i class="fa-solid fa-chart-line has-text-primary"></i>
+                </div>
+                <h1 class="title is-2 mb-3">Dashboard de Auditoria</h1>
+                <p class="subtitle is-5 has-text-grey mb-5">Monitoreo y control de actividad.</p>
             </div>
         </section>
     </main>
 
-    <footer class="footer">
-        <div class="content has-text-centered">
+    <footer class="footer is-flex is-align-items-center is-justify-content-center" style="height: 50px;">
+        <div class="content has-text-centered m-0">
             <p><strong>EcoTech</strong> - Trabajo Practico Integrador. Grupo 404 not found.</p>
         </div>
     </footer>
