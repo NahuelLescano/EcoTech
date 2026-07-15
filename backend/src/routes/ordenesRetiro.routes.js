@@ -1,10 +1,25 @@
 import { Router } from "express";
-import { completarOrden, listarOrdenesPendientes } from "../controller/ordenesRetiro.controller.js";
+import {
+  actualizarOrdenRetiro,
+  eliminarOrdenRetiro,
+  listarOrdenes,
+  listarOrdenesPendientes,
+  completarOrden,
+  programarOrdenRetiro,
+  despacharOrden,
+} from "../controller/ordenesRetiro.controller.js";
+import { middlewareValidarOrdenRetiro } from "../schemas/middlewares/validarOrdenesRetiro.js";
 
 const ordenesRetiroRouter = Router();
 
 ordenesRetiroRouter
-  .get("/", listarOrdenesPendientes)
-  .put("/:id/completar", completarOrden);
+  .get("/", listarOrdenes)
+  .get("/pendientes", listarOrdenesPendientes)
+  .get("/todas", listarOrdenes)
+  .post("/", middlewareValidarOrdenRetiro, programarOrdenRetiro)
+  .put("/:id", middlewareValidarOrdenRetiro, actualizarOrdenRetiro)
+  .delete("/:id", eliminarOrdenRetiro)
+  .put("/:id/completar", completarOrden)
+  .delete("/:id/despachar", despacharOrden);
 
 export default ordenesRetiroRouter;
