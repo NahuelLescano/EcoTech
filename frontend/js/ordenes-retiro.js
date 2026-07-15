@@ -26,6 +26,10 @@ function mostrarNotificacion(mensaje, tipo) {
   notificacionTexto.textContent = mensaje;
   notificacion.classList.remove("is-hidden");
   notificacion.classList.add("notification", tipo);
+
+  setTimeout(() => {
+    notificacion.classList.add("is-hidden");
+  }, 3000);
 }
 
 function escaparHtml(value) {
@@ -62,7 +66,7 @@ function cargarOrdenEnFormulario(orden) {
 function crearAccionBoton(texto, clase, onClick) {
   const button = document.createElement("button");
   button.type = "button";
-  button.className = `button is-small ${clase}`;
+  button.className = `button is-small ${clase} mr-2 mb-1`;
   button.textContent = texto;
   button.addEventListener("click", onClick);
   return button;
@@ -73,6 +77,7 @@ function renderizarOrdenes(ordenes) {
 
   if (ordenes.length === 0) {
     sinOrdenes.classList.remove("is-hidden");
+    limpiarFormulario();
     return;
   }
 
@@ -85,21 +90,35 @@ function renderizarOrdenes(ordenes) {
       <td>${escaparHtml(orden.contenedor_id)}</td>
       <td>${escaparHtml(orden.empresa_recolectora ?? "-")}</td>
       <td>${escaparHtml(orden.patente_camion ?? "-")}</td>
-      <td>${escaparHtml(orden.fecha_programada ?? "-")}</td>
+      <td>${escaparHtml(formatearFecha(orden.fecha_programada))}</td>
       <td>${escaparHtml(orden.estado_orden ?? "-")}</td>
     `;
 
     const accionesTd = document.createElement("td");
+
+    if (orden.estado_orden === "Pendiente" && Number(orden.carga_actual_kg) > 0) {
+      accionesTd.appendChild(
+        crearAccionBoton("Completar", "is-info", async () => {
+          await completarOrden(orden.id);
+        }),
+      );
+    }
+
+    if (orden.estado_orden === "Completada") {
+      accionesTd.appendChild(
+        crearAccionBoton("Despachar", "is-success", async () => {
+          await despacharOrden(orden.id);
+        }),
+      );
+    }
+
     accionesTd.appendChild(
       crearAccionBoton("Editar", "is-warning", () => cargarOrdenEnFormulario(orden)),
     );
-    accionesTd.appendChild(document.createTextNode(" "));
     accionesTd.appendChild(
       crearAccionBoton("Eliminar", "is-danger", async () => {
-        const confirmado = window.confirm(`¿Eliminar la orden #${orden.id}?`);
-        if (!confirmado) {
-          return;
-        }
+        const confirmado = await mostrarConfirm(`¿Eliminar la orden #${orden.id}?`);
+        if (!confirmado) return;
 
         await eliminarOrden(orden.id);
       }),
@@ -199,4 +218,78 @@ if (contenedorIdDesdeLogistica) {
   contenedorIdInput.value = contenedorIdDesdeLogistica;
 }
 
+function formatearFecha(fecha) {
+  if (!fecha) return "-";
+  const date = new Date(fecha);
+  return date.toLocaleDateString("es-ES");
+}
+
+async function completarOrden(id) {
+  const confirmado = await mostrarConfirm(`¿Marcar la orden #${id} como completada?`);
+  if (!confirmado) return;
+
+  try {
+    const res = await fetch(`${API_ORDENES_RETIROS}/${id}/completar`, {
+      method: "PUT",
+    });
+    const contentType = res.headers.get("content-type") ?? "";
+    const data = contentType.includes("application/json") ? await res.json() : {};
+
+    if (!res.ok) {
+      mostrarNotificacion(data.message ?? "Error al completar la orden", "is-danger");
+      return;
+    }
+
+    mostrarNotificacion(data.message ?? "Orden completada correctamente", "is-success");
+    cargarOrdenes();
+  } catch (error) {
+    mostrarNotificacion("Error al completar la orden", "is-danger");
+  }
+}
+
+async function despacharOrden(id) {
+  const confirmado = await mostrarConfirm(`¿Despachar orden #${id}? El contenedor será vaciado y la orden eliminada.`);
+  if (!confirmado) return;
+
+  try {
+    const res = await fetch(`${API_ORDENES_RETIROS}/${id}/despachar`, {
+      method: "DELETE",
+    });
+    const contentType = res.headers.get("content-type") ?? "";
+    const data = contentType.includes("application/json") ? await res.json() : {};
+
+    if (!res.ok) {
+      mostrarNotificacion(data.message ?? "Error al despachar la orden", "is-danger");
+      return;
+    }
+
+    mostrarNotificacion(data.message ?? "Orden despachada correctamente", "is-success");
+    cargarOrdenes();
+  } catch (error) {
+    mostrarNotificacion("Error al despachar la orden", "is-danger");
+  }
+}
+
+function mostrarConfirm(mensaje) {
+  return new Promise((resolve) => {
+    const modal = document.getElementById("confirm-modal");
+    const mensajeEl = document.getElementById("confirm-mensaje");
+    const btnAceptar = document.getElementById("confirm-aceptar");
+    const btnCancelar = document.getElementById("confirm-cancelar");
+    const btnClose = document.getElementById("confirm-cancel");
+
+    mensajeEl.textContent = mensaje;
+    modal.classList.add("is-active");
+
+    function cerrar(resultado) {
+      modal.classList.remove("is-active");
+      resolve(resultado);
+    }
+
+    btnAceptar.onclick = () => cerrar(true);
+    btnCancelar.onclick = () => cerrar(false);
+    btnClose.onclick = () => cerrar(false);
+    modal.querySelector(".modal-background").onclick = () => cerrar(false);
+  });
+}
 cargarOrdenes();

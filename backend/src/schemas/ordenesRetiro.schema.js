@@ -4,7 +4,7 @@ export const validarOrdenRetiroSchema = (datos) => {
   const contenedorId = datos.contenedorId ?? datos.contenedor_id;
   const empresaRecolectora = datos.empresaRecolectora ?? datos.empresa_recolectora;
   const patenteCamion = datos.patenteCamion ?? datos.patente_camion;
-  const formatoFechaValido = /^\d{2}\/\d{2}\/\d{4}$/;
+  const formatoFechaValido = /^\d{4}-\d{2}-\d{2}$/;
 
   if (!contenedorId) {
     errores.push("El campo contenedorId es obligatorio!");

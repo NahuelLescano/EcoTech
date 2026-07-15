@@ -6,6 +6,7 @@ import {
   listarOrdenesPendientes,
   completarOrden,
   programarOrdenRetiro,
+  despacharOrden,
 } from "../controller/ordenesRetiro.controller.js";
 import { middlewareValidarOrdenRetiro } from "../schemas/middlewares/validarOrdenesRetiro.js";
 
@@ -18,6 +19,7 @@ ordenesRetiroRouter
   .post("/", middlewareValidarOrdenRetiro, programarOrdenRetiro)
   .put("/:id", middlewareValidarOrdenRetiro, actualizarOrdenRetiro)
   .delete("/:id", eliminarOrdenRetiro)
-  .put("/:id/completar", completarOrden);
+  .put("/:id/completar", completarOrden)
+  .delete("/:id/despachar", despacharOrden);
 
 export default ordenesRetiroRouter;

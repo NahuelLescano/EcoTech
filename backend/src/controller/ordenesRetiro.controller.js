@@ -2,6 +2,7 @@ import {
   completarOrdenRetiro,
   createOrdenRetiro,
   deleteOrdenRetiro,
+  despacharOrdenRetiro,
   getOrdenPendienteByContenedorId,
   getOrdenRetiroById,
   getOrdenesPendientes,
@@ -142,3 +143,19 @@ export const completarOrden = async (req, res) => {
     res.status(500).json({ message: "Error al completar la orden" });
   }
 };
+
+export const despacharOrden = async (req, res) => {
+  const id = Number(req.params.id);
+  if (Number.isNaN(id) || !Number.isInteger(id) || id <= 0) {
+    res.status(400).json({ message: "ID de orden inválido" });
+    return;
+  }
+
+  const resultado = await despacharOrdenRetiro(id);
+  if (!resultado) {
+    res.status(404).json({ message: "Orden no encontrada o ya esta completa" });
+    return;
+  }
+
+  res.json({ message: `Orden #${resultado.ordenId} despachada. Contenedor #${resultado.contenedorId} vaciado.` });
+}

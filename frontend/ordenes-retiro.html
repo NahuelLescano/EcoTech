@@ -53,28 +53,32 @@
                             <div class="field">
                                 <label class="label" for="contenedorId">Contenedor</label>
                                 <div class="control">
-                                    <input class="input" id="contenedorId" type="number" min="1" placeholder="Ej: 1" required>
+                                    <input class="input" id="contenedorId" type="number" min="1" placeholder="Ej: 1"
+                                        required>
                                 </div>
                             </div>
 
                             <div class="field">
                                 <label class="label" for="empresaRecolectora">Empresa recolectora</label>
                                 <div class="control">
-                                    <input class="input" id="empresaRecolectora" type="text" maxlength="100" placeholder="Ej: Recolectora Norte" required>
+                                    <input class="input" id="empresaRecolectora" type="text" maxlength="100"
+                                        placeholder="Ej: Recolectora Norte" required>
                                 </div>
                             </div>
 
                             <div class="field">
                                 <label class="label" for="patenteCamion">Patente del camión</label>
                                 <div class="control">
-                                    <input class="input" id="patenteCamion" type="text" maxlength="20" placeholder="Ej: ABC123" required>
+                                    <input class="input" id="patenteCamion" type="text" maxlength="20"
+                                        placeholder="Ej: ABC123" required>
                                 </div>
                             </div>
 
                             <div class="field">
                                 <label class="label" for="fechaProgramada">Fecha programada</label>
                                 <div class="control">
-                                    <input class="input" id="fechaProgramada" type="text" inputmode="numeric" placeholder="DD/MM/AAAA" pattern="\d{2}/\d{2}/\d{4}" required>
+                                    <input class="input" id="fechaProgramada" type="date" inputmode="numeric"
+                                        placeholder="DD/MM/AAAA" required>
                                 </div>
                             </div>
 
@@ -83,7 +87,8 @@
                                     <button class="button is-primary" type="submit" id="btn-guardar">Guardar</button>
                                 </div>
                                 <div class="control">
-                                    <button class="button is-light is-hidden" type="button" id="btn-cancelar">Cancelar</button>
+                                    <button class="button is-light is-hidden" type="button"
+                                        id="btn-cancelar">Cancelar</button>
                                 </div>
                             </div>
                         </form>
@@ -137,6 +142,23 @@
             <p><strong>EcoTech</strong> - Trabajo Practico Integrador. Grupo 404 not found.</p>
         </div>
     </footer>
+
+    <div class="modal" id="confirm-modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Confirmar</p>
+                <button class="delete" aria-label="close" id="confirm-cancel"></button>
+            </header>
+            <section class="modal-card-body">
+                <p id="confirm-mensaje"></p>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button" id="confirm-cancelar">Cancelar</button>
+                <button class="button is-success" id="confirm-aceptar">Aceptar</button>
+            </footer>
+        </div>
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {

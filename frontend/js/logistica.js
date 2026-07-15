@@ -55,9 +55,12 @@ function crearTarjetaContenedor(contenedor) {
                     <p class="is-size-7 has-text-grey">${escaparHtml(contenedor.carga_actual_kg)} kg de ${escaparHtml(contenedor.capacidad_maxima_kg)} kg</p>
                 </div>
                 <div class="mt-4">
-                    <a class="button is-link is-fullwidth" href="ordenes-retiro.html?contenedorId=${escaparHtml(contenedor.id)}">
+                    ${contenedor.estado_llenado === "Lleno"
+                      ? `<a class="button is-link is-fullwidth" href="ordenes-retiro.html?contenedorId=${escaparHtml(contenedor.id)}">
                         Programar retiro
-                    </a>
+                    </a>`
+                      : `<span class="button is-link is-light is-fullwidth is-static">Sin carga para retirar</span>`
+                    }
                 </div>
         </div>
     </div>

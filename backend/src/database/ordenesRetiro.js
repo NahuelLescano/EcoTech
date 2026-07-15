@@ -86,10 +86,21 @@ export async function deleteOrdenRetiro(ordenId) {
 }
 
 export async function completarOrdenRetiro(ordenId) {
-  const client = await pool.connect();
+  const res = await pool.query(
+    `UPDATE OrdenesRetiros
+     SET estado_orden = 'Completada'
+     WHERE id = $1 AND estado_orden = 'Pendiente'
+    RETURNING id, contenedor_id, estado_orden`,
+    [ordenId]
+  );
 
-  const { rows } = await client.query(
-    `SELECT contenedor_id FROM OrdenesRetiros WHERE id = $1 AND estado_orden = 'Pendiente'`,
+  return res.rows[0] ?? null;
+}
+
+export async function despacharOrdenRetiro(ordenId) {
+  const { rows } = await pool.query(
+    `SELECT contenedor_id FROM OrdenesRetiros
+     WHERE id = $1 AND estado_orden = 'Completada'`,
     [ordenId]
   );
 
@@ -98,13 +109,18 @@ export async function completarOrdenRetiro(ordenId) {
   }
 
   const contenedorId = rows[0].contenedor_id;
-  await client.query(
-    `UPDATE OrdenesRetiros SET estado_orden = 'Completada' WHERE id = $1`,
-    [ordenId]
-  );
-  await client.query(
-    `UPDATE ContenedoresHub SET carga_actual_kg = 0, estado_llenado = 'Vacante' WHERE id = $1`,
+
+  await pool.query(
+    `UPDATE ContenedoresHub
+     SET carga_actual_kg = 0, estado_llenado = 'Vacante'
+     WHERE id = $1`,
     [contenedorId]
   );
+
+  await pool.query(
+    `DELETE FROM OrdenesRetiros WHERE id = $1`,
+    [ordenId]
+  );
+
   return { ordenId, contenedorId };
 }
