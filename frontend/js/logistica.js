@@ -188,4 +188,4 @@ async function cargarContenedoresHub() {
 }
 
 cargarOrdenes();
-// cargarContenedoresHub();
+cargarContenedoresHub();
