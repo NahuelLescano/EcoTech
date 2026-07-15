@@ -24,7 +24,8 @@ btnDelete.addEventListener("click", () => {
 
 function mostrarNotificacion(mensaje, tipo) {
   notificacionTexto.textContent = mensaje;
-  notificacion.className = `notification ${tipo}`;
+  notificacion.classList.remove("is-hidden");
+  notificacion.classList.add("notification", tipo);
 }
 
 function escaparHtml(value) {
