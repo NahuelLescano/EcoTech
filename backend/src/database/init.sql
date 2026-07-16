@@ -22,7 +22,7 @@ CREATE TABLE OrdenesRetiros (
     contenedor_id INT NOT NULL REFERENCES ContenedoresHub(id),
     empresa_recolectora VARCHAR(100),
     patente_camion VARCHAR(20),
-    fecha_programada VARCHAR(20) NOT NULL DEFAULT TO_CHAR(CURRENT_DATE, 'DD/MM/YYYY'),
+    fecha_programada TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     estado_orden VARCHAR(20) NOT NULL DEFAULT 'Pendiente'
 );
 
