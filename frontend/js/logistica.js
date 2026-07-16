@@ -1,12 +1,11 @@
-import { API_ORDENES_RETIROS, API_CONTENEDORES } from "../env.js";
+import { API_CONTENEDORES } from "../env.js";
 
-const tbody = document.getElementById("body-ordenes");
-const loading = document.getElementById("loading");
-const sinOrdenes = document.getElementById("sin-ordenes");
-const tablaOrdenes = document.getElementById("tabla-ordenes");
+const grid = document.getElementById("contenedores-grid");
 const notificacion = document.getElementById("notificacion");
 const notificacionTexto = document.getElementById("notificacion-texto");
 const btnDelete = notificacion.querySelector(".delete");
+
+let contenedoresHub = [];
 
 btnDelete.addEventListener("click", () => {
   notificacion.classList.add("is-hidden");
@@ -15,94 +14,13 @@ btnDelete.addEventListener("click", () => {
 function mostrarNotificacion(mensaje, tipo) {
   notificacionTexto.textContent = mensaje;
   notificacion.className = `notification ${tipo}`;
-};
+}
 
-async function cargarOrdenes() {
-  try {
-    const res = await fetch(API_ORDENES_RETIROS);
-    const contentType = res.headers.get("content-type") ?? "";
-    const data = contentType.includes("application/json") ? await res.json() : {};
-    const message = data?.message;
-    const ordenes = Array.isArray(data?.ordenes) ? data.ordenes : [];
-    if (!res.ok) {
-      loading.classList.add("is-hidden");
-      tablaOrdenes.classList.add("is-hidden");
-      sinOrdenes.classList.add("is-hidden");
-      tbody.innerHTML = "";
-      mostrarNotificacion(message ?? "Error al cargar órdenes", "is-danger");
-      return;
-    }
-
-    loading.classList.add("is-hidden");
-
-    if (ordenes.length === 0) {
-      tablaOrdenes.classList.add("is-hidden");
-      tbody.innerHTML = "";
-      sinOrdenes.classList.remove("is-hidden");
-      return;
-    }
-
-    sinOrdenes.classList.add("is-hidden");
-    tablaOrdenes.classList.remove("is-hidden");
-    tbody.innerHTML = "";
-
-    for (const orden of ordenes) {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-      <td>${escaparHtml(orden.id)}</td>
-      <td>${escaparHtml(orden.contenedor_id)}</td>
-      <td>${escaparHtml(orden.ubicacion_barrio)}</td>
-      <td>${escaparHtml(orden.tipo_residuo_permitido)}</td>
-      <td>${escaparHtml(orden.carga_actual_kg)} / ${escaparHtml(orden.capacidad_maxima_kg)}</td>
-        <td>
-            <button class="button is-small is-success btn-completar" data-id="${orden.id}">
-                Marcar como completada
-            </button>
-        </td>
-      `;
-      tbody.appendChild(tr);
-    }
-    document.querySelectorAll(".btn-completar").forEach((btn) => {
-      btn.addEventListener("click", async () => {
-        btn.disabled = true;
-        try {
-          await marcarCompletada(btn.dataset.id);
-        } finally {
-          btn.disabled = false;
-        }
-      });
-    });
-  } catch (err) {
-    loading.classList.add("is-hidden");
-    mostrarNotificacion("Error al cargar las órdenes de retiro", "is-danger");
-  }
-};
-
-async function marcarCompletada(id) {
-  try {
-    const res = await fetch(`${API_ORDENES_RETIROS}/${id}/completar`, {
-      method: "PUT",
-    });
-
-    const contentType = res.headers.get("content-type") ?? "";
-    const data = contentType.includes("application/json") ? await res.json() : {};
-    const { message, contenedorId } = data;
-    if (!res.ok) {
-      mostrarNotificacion(message ?? "Error al registrar un depósito.", "is-danger");
-      return;
-    }
-
-    mostrarNotificacion(`Orden #${id} completada. Contenedor ${contenedorId} reiniciado.`, "is-success");
-    cargarOrdenes();
-  } catch (err) {
-    mostrarNotificacion("Error al completar la orden.", "is-danger");
-  } finally {
-    loading.classList.add("is-hidden");
-  }
-};
-
-let contenedoresHub = [];
-const grid = document.getElementById("contenedores-grid");
+function escaparHtml(value) {
+  const div = document.createElement("div");
+  div.textContent = value;
+  return div.innerHTML;
+}
 
 function calcularPorcentajeCapacidad(contenedor) {
   const capacidadMaxima = Number(contenedor.capacidad_maxima_kg);
@@ -115,13 +33,6 @@ function calcularPorcentajeCapacidad(contenedor) {
   return Math.min(100, Math.max(0, (cargaActual / capacidadMaxima) * 100));
 }
 
-// Escapa los caracteres especiales para evitar inyecciones de HTML.
-function escaparHtml(value) {
-  const div = document.createElement("div");
-  div.textContent = value;
-  return div.innerHTML;
-}
-
 function crearTarjetaContenedor(contenedor) {
   const porcentajeCapacidad = calcularPorcentajeCapacidad(contenedor);
   const porcentajeRedondeado = Math.round(porcentajeCapacidad);
@@ -132,16 +43,24 @@ function crearTarjetaContenedor(contenedor) {
   columna.innerHTML = `
     <div class="card">
         <div class="card-content">
-                <p class="title is-5">Estacion #${escaparHtml(contenedor.id)}</p>
+                <p class="title is-5">Estación #${escaparHtml(contenedor.id)}</p>
                 <p><strong>Barrio:</strong> ${escaparHtml(contenedor.ubicacion_barrio)}</p>
                 <p><strong>Residuo:</strong> ${escaparHtml(contenedor.tipo_residuo_permitido)}</p>
                 <p><strong>Estado:</strong> ${escaparHtml(contenedor.estado_llenado)}</p>
                 <div class="mt-4">
-                    <p class="mb-2"><strong>Capacidad actual:</strong>${porcentajeRedondeado}%</p>
+                    <p class="mb-2"><strong>Capacidad actual:</strong> ${porcentajeRedondeado}%</p>
                     <progress class="progress is-primary" value="${porcentajeCapacidad}" max="100">
                         ${porcentajeRedondeado}%
                     </progress>
                     <p class="is-size-7 has-text-grey">${escaparHtml(contenedor.carga_actual_kg)} kg de ${escaparHtml(contenedor.capacidad_maxima_kg)} kg</p>
+                </div>
+                <div class="mt-4">
+                    ${contenedor.estado_llenado === "Lleno"
+                      ? `<a class="button is-link is-fullwidth" href="ordenes-retiro.html?contenedorId=${escaparHtml(contenedor.id)}">
+                        Programar retiro
+                    </a>`
+                      : `<span class="button is-link is-light is-fullwidth is-static">Sin carga para retirar</span>`
+                    }
                 </div>
         </div>
     </div>
@@ -172,20 +91,17 @@ async function cargarContenedoresHub() {
     const response = await fetch(API_CONTENEDORES);
 
     if (!response.ok) {
-      throw new Error(`Error HTTP ${response.status}`);
+      throw new Error(`Error al cargar los contenedores: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
     contenedoresHub = Array.isArray(data) ? data : [];
     renderizarContenedoresHub();
-
-    console.log("ContenedoresHub cargados:", contenedoresHub);
   } catch (error) {
-    console.error("No se pudieron cargar los contenedores:", error);
     contenedoresHub = [];
     renderizarContenedoresHub();
+    mostrarNotificacion("No se pudieron cargar los contenedores", "is-danger");
   }
 }
 
-cargarOrdenes();
 cargarContenedoresHub();
