@@ -1,102 +1,110 @@
 import { API_DEPOSITOS } from "../env.js";
 
+const tbody = document.getElementById("table-depositos");
+const notificacion = document.getElementById("notificacion");
+const notificacionTexto = document.getElementById("notificacion-texto");
+const btnDelete = notificacion.querySelector(".delete");
+
+btnDelete.addEventListener("click", () => {
+  notificacion.classList.add("is-hidden");
+});
+
+function mostrarNotificacion(mensaje, tipo) {
+  notificacionTexto.textContent = mensaje;
+  notificacion.classList.remove("is-hidden");
+  notificacion.className = `notification ${tipo}`;
+
+  setTimeout(() => {
+    notificacion.classList.add("is-hidden");
+  }, 3000);
+}
+
+function escaparHtml(value) {
+  const div = document.createElement("div");
+  div.textContent = value;
+  return div.innerHTML;
+}
+
+function mostrarConfirm(mensaje) {
+  return new Promise((resolve) => {
+    const modal = document.getElementById("confirm-modal");
+    const mensajeEl = document.getElementById("confirm-mensaje");
+    const btnAceptar = document.getElementById("confirm-aceptar");
+    const btnCancelar = document.getElementById("confirm-cancelar");
+    const btnClose = document.getElementById("confirm-cancel");
+
+    mensajeEl.textContent = mensaje;
+    modal.classList.add("is-active");
+
+    function cerrar(resultado) {
+      modal.classList.remove("is-active");
+      resolve(resultado);
+    }
+
+    btnAceptar.onclick = () => cerrar(true);
+    btnCancelar.onclick = () => cerrar(false);
+    btnClose.onclick = () => cerrar(false);
+    modal.querySelector(".modal-background").onclick = () => cerrar(false);
+  });
+}
+
 async function getAllDepositosResiduos() {
   try {
     const res = await fetch(API_DEPOSITOS);
-    const depositos = await res.json();
+    const contentType = res.headers.get("content-type") ?? "";
+    const data = contentType.includes("application/json") ? await res.json() : [];
 
-    const tableDepositos = document.getElementById("table-depositos");
-    tableDepositos.innerHTML = "";
+    const depositos = Array.isArray(data) ? data : [];
+    tbody.innerHTML = "";
 
     depositos.forEach((deposito) => {
-      const fechaDb = deposito.fecha_deposito;
-      const fechaFormateada = new Date(fechaDb).toLocaleDateString("es-Ar");
+      const fechaFormateada = new Date(deposito.fecha_deposito).toLocaleDateString("es-AR");
 
-      const row = document.createElement("tr");
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="has-text-centered">${escaparHtml(deposito.id)}</td>
+        <td class="has-text-centered">${escaparHtml(deposito.contenedor_id)}</td>
+        <td class="has-text-centered">${escaparHtml(deposito.dni_vecino)}</td>
+        <td class="has-text-centered">${escaparHtml(deposito.peso_ingresado_kg)} kg</td>
+        <td class="has-text-centered">${escaparHtml(deposito.puntos_otorgados)} pts</td>
+        <td class="has-text-centered">${fechaFormateada}</td>
+        <td class="has-text-right">
+          <div class="buttons is-right">
+            <a class="button is-small is-warning" href="deposito-editar.html?id=${escaparHtml(deposito.id)}">
+              <span class="icon"><i class="fas fa-pen"></i></span><span>Editar</span>
+            </a>
+            <button class="button is-small is-danger" data-id="${escaparHtml(deposito.id)}">
+              <span class="icon"><i class="fas fa-trash"></i></span><span>Eliminar</span>
+            </button>
+          </div>
+        </td>
+      `;
 
-      const rowId = document.createElement("td");
-      const rowContainerId = document.createElement("td");
-      const rowDni = document.createElement("td");
-      const rowPeso = document.createElement("td");
-      const rowPuntos = document.createElement("td");
-      const rowFecha = document.createElement("td");
-      const rowAcciones = document.createElement("td");
-
-      rowId.className = "has-text-centered";
-      rowContainerId.className = "has-text-centered";
-      rowDni.className = "has-text-centered";
-      rowPeso.className = "has-text-centered";
-      rowPuntos.className = "has-text-centered";
-      rowFecha.className = "has-text-centered";
-      rowAcciones.className = "acciones has-text-right";
-
-      rowId.textContent = deposito.id;
-      rowContainerId.textContent = deposito.contenedor_id;
-      rowDni.textContent = deposito.dni_vecino;
-      rowPeso.textContent = deposito.peso_ingresado_kg;
-      rowPuntos.textContent = deposito.puntos_otorgados;
-      rowFecha.textContent = fechaFormateada;
-
-      const grupoBotones = document.createElement("div");
-      grupoBotones.className = "buttons is-right";
-
-      const botonEditar = document.createElement("a");
-
-      botonEditar.className = "button is-small is-warning ";
-      botonEditar.innerHTML =
-        '<span class="icon"><i class="fas fa-pen"></i></span><span>Editar</span>';
-      botonEditar.href = `deposito-editar.html?id=${deposito.id}`;
-
-      const botonEliminar = document.createElement("button");
-
-      botonEliminar.className = "button is-small is-danger";
-      botonEliminar.innerHTML =
-        '<span class="icon"><i class="fas fa-trash"></i></span><span>Eliminar</span>';
-      botonEliminar.addEventListener("click", () => {
-        eliminarDeposito(deposito.id);
-      });
-
-      grupoBotones.appendChild(botonEditar);
-      grupoBotones.appendChild(botonEliminar);
-      rowAcciones.appendChild(grupoBotones);
-
-      row.appendChild(rowId);
-      row.appendChild(rowContainerId);
-      row.appendChild(rowDni);
-      row.appendChild(rowPeso);
-      row.appendChild(rowPuntos);
-      row.appendChild(rowFecha);
-      row.appendChild(rowAcciones);
-
-      tableDepositos.appendChild(row);
+      tr.querySelector(".is-danger").addEventListener("click", () => eliminarDeposito(deposito.id));
+      tbody.appendChild(tr);
     });
   } catch (error) {
-    console.error("Error al traer los depósitos:", error);
+    mostrarNotificacion("Error al traer los depósitos", "is-danger");
   }
 }
 
 async function eliminarDeposito(id) {
-  const confirmar = confirm(
-    "¿Estás seguro de que querés eliminar este depósito? Esto descontará los kilos del contenedor.",
-  );
-  if (!confirmar) return;
+  const confirmado = await mostrarConfirm("¿Estás seguro de que querés eliminar este depósito? Esto descontará los kilos del contenedor.");
+  if (!confirmado) return;
 
   try {
-    const res = await fetch(`${API_DEPOSITOS}/${id}`, {
-      method: "DELETE",
-    });
-
-    const data = await res.json();
+    const res = await fetch(`${API_DEPOSITOS}/${id}`, { method: "DELETE" });
+    const contentType = res.headers.get("content-type") ?? "";
+    const data = contentType.includes("application/json") ? await res.json() : {};
 
     if (res.ok) {
-      alert("Deposito eliminado correctamente.");
+      mostrarNotificacion("Depósito eliminado correctamente", "is-success");
       getAllDepositosResiduos();
     } else {
-      alert(`Error: ${data.message || "No se pudo eliminar"}`);
+      mostrarNotificacion(data.message ?? "No se pudo eliminar", "is-danger");
     }
   } catch (error) {
-    console.error("Error al eliminar:", error);
-    alert("Ocurrió un error de red al intentar eliminar.");
+    mostrarNotificacion("Ocurrió un error al intentar eliminar", "is-danger");
   }
 }
 

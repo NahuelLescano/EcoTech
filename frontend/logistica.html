@@ -36,75 +36,44 @@
                     </div>
                 </div>
             </div>
-            </div>
-            </div>
         </nav>
     </header>
 
     <main class="is-flex-grow-1">
         <section class="section">
             <div class="container is-fluid">
-                <h1 class="title is-2 mb-2">
-                    <i class="fa-solid fa-truck-ramp-box has-text-primary mr-3"></i>Panel de Logística.
-                </h1>
-                <p class="subtitle is-5 has-text-grey pl-1">
-                    Gestión de rutas y recolección inteligente de contenedores.
-                </p>
-            </div>
+                <header class="has-text-centered mb-5">
+                    <h1 class="title is-2 mb-2">
+                        <i class="fa-solid fa-truck-ramp-box has-text-primary mr-3"></i>Panel de Logística
+                    </h1>
+                    <p class="subtitle is-5 has-text-grey">
+                        Gestión de rutas y recolección inteligente de contenedores.
+                    </p>
+                </header>
 
-            <hr class="has-background-light mb-6" />
+                <hr class="has-background-light mb-6" />
 
-            <div id="loading" class="has-text-centered">
-                <p>Cargando órdenes...</p>
-            </div>
+                <div id="loading" class="has-text-centered">
+                    <p>Cargando contenedores...</p>
+                </div>
 
-            <div id="sin-ordenes" class="notification is-info is-hidden">
-                <p>No hay órdenes de retiro pendientes.</p>
-            </div>
+                <div id="sin-ordenes" class="notification is-info is-hidden">
+                    <p><i class="fa-solid fa-inbox mr-2"></i>No hay contenedores registrados.</p>
+                </div>
 
-            <div id="tabla-ordenes" class="is-hidden">
-                <table class="table is-fullwidth is-striped is-hoverable">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Contenedor</th>
-                            <th>Barrio</th>
-                            <th>Tipo Residuos</th>
-                            <th>Carga / Capacidad</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody id="body-ordenes"></tbody>
-                </table>
-            </div>
+                <div id="contenedores-grid" class="columns is-multiline"></div>
 
-            <div id="notificacion" class="notification is-hidden">
-                <button class="delete"></button>
-                <p id="notificacion-texto"></p>
-            </div>
-
-            <div id="contenedores-grid" class="columns is-multiline"></div>
-
-            <div id="notificacion" class="notification is-hidden mt-4">
-                <button class="delete"></button>
-                <p id="notificacion-texto"></p>
-            </div>
-            <div id="contenedores-grid" class="columns is-multiline">
-            </div>
-
-            <div id="notificacion" class="notification is-hidden mt-4">
-                <button class="delete"></button>
-                <p id="notificacion-texto"></p>
+                <div id="notificacion" class="notification is-hidden mt-4">
+                    <button class="delete"></button>
+                    <p id="notificacion-texto"></p>
+                </div>
             </div>
         </section>
     </main>
 
-    <footer class="footer">
-        <div class="content has-text-centered">
-            <p>
-                <strong>EcoTech</strong> - Trabajo Practico Integrador. Grupo 404 not
-                found.
-            </p>
+    <footer class="footer is-flex is-align-items-center is-justify-content-center" style="height: 50px;">
+        <div class="content has-text-centered m-0">
+            <p><strong>EcoTech</strong> - Trabajo Practico Integrador. Grupo 404 not found.</p>
         </div>
     </footer>
 

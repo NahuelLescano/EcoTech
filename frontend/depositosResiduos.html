@@ -1,21 +1,17 @@
 <!doctype html>
-<html lang="en">
-  <head>
+<html lang="es">
+
+<head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Depositos</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.4/css/bulma.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.4/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" />
     <script type="module" defer src="js/depositoResiduos.js"></script>
-  </head>
-  <body>
+</head>
+
+<body class="is-flex is-flex-direction-column" style="min-height: 100vh;">
     <header>
         <nav class="navbar is-primary" aria-label="main navigation">
             <div class="container is-fluid">
@@ -40,57 +36,80 @@
                     </div>
                 </div>
             </div>
-          </div>
-        </div>
-      </nav>
+        </nav>
     </header>
-    <main>
-      <section class="section">
-        <div class="container">
-          <div class="level page-header is-mobile">
-            <div class="level-left">
-              <div class="level-item">
-                <div>
-                  <h1 class="title">
-                    <span class="icon-text">
-                      <span>Depositos de Residuos</span>
-                    </span>
-                  </h1>
-                  <p class="subtitle is-6 has-text-grey">
-                    Registro de deposito de basura en contenedores.
-                  </p>
+    <main class="is-flex-grow-1">
+        <section class="section">
+            <div class="container is-fluid">
+                <header class="has-text-centered mb-5">
+                    <h1 class="title is-2 mb-2">
+                        <i class="fa-solid fa-box-archive has-text-primary mr-3"></i>Depósitos de Residuos
+                    </h1>
+                    <p class="subtitle is-5 has-text-grey">Registro de depósitos de residuos en contenedores.</p>
+                </header>
+
+                <hr class="has-background-light mb-6" />
+
+                <p id="error" class="has-text-danger mb-3"></p>
+
+                <div class="box">
+                    <table class="table is-fullwidth is-striped is-hoverable is-narrow">
+                        <thead>
+                            <tr>
+                                <th class="has-text-centered">ID</th>
+                                <th class="has-text-centered">ID del Contenedor</th>
+                                <th class="has-text-centered">Dni del Vecino</th>
+                                <th class="has-text-centered">Peso Ingresado</th>
+                                <th class="has-text-centered">Puntos Otorgados</th>
+                                <th class="has-text-centered">Fecha de Deposito</th>
+                                <th class="has-text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-depositos"></tbody>
+                    </table>
                 </div>
-              </div>
-            </div>
-            <div class="level-right">
-              <div class="level-item">
-                <a href="deposito-nuevo.html" class="button is-primary">
-                  <span>Nuevo Deposito</span>
-                </a>
-              </div>
-            </div>
-          </div>
 
-          <p id="error" class="has-text-danger mb-3"></p>
-
-          <div class="box">
-            <table class="table is-fullwidth is-striped is-hoverable">
-              <thead>
-                <tr>
-                  <th class="has-text-centered">ID</th>
-                  <th class="has-text-centered">ID del Contenedor</th>
-                  <th class="has-text-centered">Dni del Vecino</th>
-                  <th class="has-text-centered">Peso Ingresado</th>
-                  <th class="has-text-centered">Puntos Otorgados</th>
-                  <th class="has-text-centered">Fecha de Deposito</th>
-                  <th class="has-text-right">Acciones</th>
-                </tr>
-              </thead>
-              <tbody id="table-depositos"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
+                <div id="notificacion" class="notification is-hidden">
+                    <button class="delete"></button>
+                    <p id="notificacion-texto"></p>
+                </div>
+            </div>
+        </section>
     </main>
-  </body>
+    <footer class="footer is-flex is-align-items-center is-justify-content-center" style="height: 50px;">
+        <div class="content has-text-centered m-0">
+            <p><strong>EcoTech</strong> - Trabajo Practico Integrador. Grupo 404 not found.</p>
+        </div>
+    </footer>
+
+    <div class="modal" id="confirm-modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Confirmar</p>
+                <button class="delete" aria-label="close" id="confirm-cancel"></button>
+            </header>
+            <section class="modal-card-body">
+                <p id="confirm-mensaje"></p>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button" id="confirm-cancelar">Cancelar</button>
+                <button class="button is-success" id="confirm-aceptar">Aceptar</button>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const burger = document.querySelector(".navbar-burger");
+            const menu = document.getElementById(burger.dataset.target);
+
+            burger.addEventListener("click", () => {
+                burger.classList.toggle("is-active");
+                menu.classList.toggle("is-active");
+            });
+        });
+    </script>
+</body>
+
 </html>
