@@ -57,6 +57,9 @@ export const registrarDeposito = async (req, res) => {
     }
 
     const nuevaCarga = contenedor.carga_actual_kg + pesoIngresado;
+    if (nuevaCarga > contenedor.capacidad_maxima_kg) {
+      return res.status(400).json({ message: `El peso ingresado excede la capacidad máxima del contenedor. Capacidad máxima: ${contenedor.capacidad_maxima_kg} kg, Carga actual: ${contenedor.carga_actual_kg} kg, Peso ingresado: ${pesoIngresado} kg.` });
+    }
 
     const porcentajeMaximo = contenedor.capacidad_maxima_kg * 0.9;
 
