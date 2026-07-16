@@ -1,19 +1,14 @@
 <!doctype html>
 <html lang="es">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inicio - Eco Tech</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.4/css/bulma.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css"
-    />
-  </head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.4/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" />
+</head>
 
 <body class="is-flex is-flex-direction-column" style="min-height: 100vh;">
     <header>
@@ -38,9 +33,9 @@
                     </div>
                 </div>
             </div>
-          </div>
-        </div>
-      </nav>
+            </div>
+            </div>
+        </nav>
     </header>
 
     <main class="is-flex-grow-1 is-flex is-align-items-center is-justify-content-center">
@@ -62,15 +57,16 @@
     </footer>
 
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const burger = document.querySelector(".navbar-burger");
-        const menu = document.getElementById(burger.dataset.target);
+        document.addEventListener("DOMContentLoaded", () => {
+            const burger = document.querySelector(".navbar-burger");
+            const menu = document.getElementById(burger.dataset.target);
 
-        burger.addEventListener("click", () => {
-          burger.classList.toggle("is-active");
-          menu.classList.toggle("is-active");
+            burger.addEventListener("click", () => {
+                burger.classList.toggle("is-active");
+                menu.classList.toggle("is-active");
+            });
         });
-      });
     </script>
-  </body>
+</body>
+
 </html>
