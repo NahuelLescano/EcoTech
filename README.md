@@ -69,7 +69,9 @@ ecotech-tp/
 │   └── docker-compose.yml
 ├── frontend/                   # Sitio estático (HTML + Bulma + Vanilla JS)
 │   ├── index.html              # Inicio
-│   ├── terminal.html           # Terminal del Vecino
+│   ├── depositosResiduos.html  # Gestión de Depósitos (CRUD)
+│   ├── deposito-nuevo.html     # Crear depósito
+│   ├── deposito-editar.html    # Editar depósito
 │   ├── logistica.html          # Panel de Logística
 │   ├── ordenes-retiro.html     # Gestión de Órdenes de Retiro
 │   ├── auditoria.html          # Dashboard de Auditoría
@@ -129,7 +131,11 @@ ecotech-tp/
 
 | Método | Ruta | Descripción |
 |--------|------|-------------|
+| GET | `/api/depositos` | Listar todos los depósitos |
+| GET | `/api/depositos/:id` | Obtener un depósito por ID |
 | POST | `/api/depositos` | Registrar depósito de residuos |
+| PUT | `/api/depositos/:id` | Actualizar un depósito |
+| DELETE | `/api/depositos/:id` | Eliminar un depósito |
 
 ### Órdenes de Retiro
 
@@ -152,8 +158,10 @@ ecotech-tp/
 ## Reglas de Negocio
 
 - **Cálculo de puntos**: Cada tipo de residuo otorga puntos por kg (plástico: 10, cartón: 5, vidrio: 15, metal: 20)
-- **Disparador automático**: Si un depósito supera el 90% de capacidad, el contenedor cambia a estado `Lleno` y se crea automáticamente una `OrdenRetiro` con estado `Pendiente`
+- **Validación de tipo**: Solo se puede depositar el tipo de residuo que admite el contenedor
+- **Validación de capacidad**: No se permite depositar si el peso excede la capacidad máxima del contenedor
 - **Bloqueo**: No se permiten depósitos en contenedores con estado `Lleno`
+- **Disparador automático**: Si un depósito supera el 90% de capacidad, el contenedor cambia a estado `Lleno` y se crea automáticamente una `OrdenRetiro` con estado `Pendiente`
 - **Completar orden**: Marca la orden como `Completada` sin modificar el contenedor. Solo se puede completar si el contenedor tiene carga
 - **Despachar orden**: Resetea la carga del contenedor a 0, cambia su estado a `Vacante` y elimina la orden. Solo se puede despachar si la orden está en estado `Completada`
 - **Programar retiro**: No se puede programar un retiro si el contenedor está vacío (`Vacante`)
