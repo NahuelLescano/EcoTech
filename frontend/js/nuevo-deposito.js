@@ -23,7 +23,7 @@ form.addEventListener("submit", async (e) => {
     dniVecino: document.getElementById("dniVecino").value.trim(),
     tipoResiduo: document.getElementById("tipoResiduo").value,
     pesoIngresado: Number(document.getElementById("pesoIngresado").value),
-  }
+  };
 
   try {
     const res = await fetch(API_DEPOSITOS, {
@@ -31,17 +31,25 @@ form.addEventListener("submit", async (e) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     });
 
     const contentType = res.headers.get("content-type") ?? "";
-    const data = contentType.includes("application/json") ? await res.json() : {};
+    const data = contentType.includes("application/json")
+      ? await res.json()
+      : {};
     if (!res.ok) {
-      mostrarNotificacion(data.message ?? "Error al registrar un depósito", "is-danger");
+      mostrarNotificacion(
+        data.message ?? "Error al registrar un depósito",
+        "is-danger",
+      );
       return;
     }
 
-    mostrarNotificacion(`Depósito registrado correctamente. Ganaste ${data.puntosOtorgados} puntos`, "is-success");
+    mostrarNotificacion(
+      `Depósito registrado correctamente. Ganaste ${data.puntosOtorgados} puntos`,
+      "is-success",
+    );
   } catch (err) {
     mostrarNotificacion("Error al registrar el depósito", "is-danger");
   }
