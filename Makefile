@@ -33,7 +33,7 @@ down:
 
 remove:
 	@echo "Removing backend API..."
-	cd backend && docker compose down -v
+	cd backend && docker compose down && rm -rf backend/data
 
 logs:
 	@echo "Logging backend API..."
