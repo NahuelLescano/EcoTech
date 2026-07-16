@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editar Deposito</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.4/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/hide-spinners.css" />
+    <script type="module" defer src="js/editarDeposito.js"></script>
+  </head>
+
+  <body>
+    <header>
+        <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+            <div class="container is-fluid">
+                <div class="navbar-brand">
+                    <a class="navbar-item has-text-weight-bold is-size-4" href="index.html">
+                        Eco Tech<i class="fa-solid fa-leaf"></i>
+                    </a>
+                    <button class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="main-navbar">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div id="main-navbar" class="navbar-menu">
+                    <div class="navbar-end">
+                        <a class="navbar-item has-text-weight-bold" href="index.html">Inicio</a>
+                        <a class="navbar-item has-text-weight-bold" href="depositosResiduos.html">Depositos</a>
+                        <a class="navbar-item has-text-weight-bold" href="logistica.html">Panel de Logistica</a>
+                        <a class="navbar-item has-text-weight-bold" href="ordenes-retiro.html">Ordenes de retiro</a>
+                        <a class="navbar-item has-text-weight-bold is-active" href="auditoria.html">Dashboard de
+                            Auditoria</a>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="section">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-6">
+            <!-- CABECERA ALINEADA CON EL FORMULARIO -->
+            <div class="level mb-6">
+              <!-- Lado izquierdo: Textos -->
+              <div class="level-left">
+                <div class="level-item">
+                  <div>
+                    <h1 class="title is-4">Editar Deposito de Residuo</h1>
+                    <p class="subtitle is-6">
+                      Modificá los datos del depósito seleccionado
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Lado derecho: Botón -->
+              <div class="level-right">
+                <div class="level-item">
+                  <a href="depositosResiduos.html" class="button is-primary">
+                    <span class="icon"><i class="fas fa-arrow-left"></i></span>
+                    <span>Volver</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <!-- FIN CABECERA -->
+
+            <!-- FORMULARIO -->
+            <form id="form-editar-deposito">
+              <div class="field">
+                <label class="label" for="containerId">ID del Contenedor</label>
+                <div class="control">
+                  <input
+                    class="input is-rounded"
+                    name="containerId"
+                    type="number"
+                    id="containerId"
+                    min="1"
+                    placeholder="Ej: 1"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label" for="dniVecino">DNI del Vecino</label>
+                <div class="control">
+                  <input
+                    class="input is-rounded"
+                    name="dniVecino"
+                    id="dniVecino"
+                    placeholder="Ej: 12345678"
+                    maxlength="8"
+                    inputmode="numeric"
+                    pattern="[0-9]{7,8}"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label" for="pesoIngresado">Peso (kg)</label>
+                <div class="control">
+                  <input
+                    class="input is-rounded"
+                    name="pesoIngresado"
+                    type="number"
+                    id="pesoIngresado"
+                    placeholder="Ej: 2"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="field mt-5">
+                <div class="control">
+                  <button class="button is-primary is-fullwidth" type="submit">
+                    Guardar Cambios
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <div id="notificacion" class="notification is-hidden mt-4">
+              <button class="delete"></button>
+              <p id="notificacion-texto"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>EcoTech</strong> - Trabajo Practico Integrador. Grupo 404 not
+          found.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const burger = document.querySelector(".navbar-burger");
+        const menu = document.getElementById(burger.dataset.target);
+
+        burger.addEventListener("click", () => {
+          burger.classList.toggle("is-active");
+          menu.classList.toggle("is-active");
+        });
+      });
+    </script>
+  </body>
+</html>

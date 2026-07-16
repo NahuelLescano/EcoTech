@@ -91,7 +91,7 @@ async function cargarContenedoresHub() {
     const response = await fetch(API_CONTENEDORES);
 
     if (!response.ok) {
-      throw new Error(`Error HTTP ${response.status}`);
+      throw new Error(`Error al cargar los contenedores: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();

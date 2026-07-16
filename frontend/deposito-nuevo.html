@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nuevo Deposito</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.4/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/hide-spinners.css" />
+    <script type="module" defer src="js/nuevo-deposito.js"></script>
+  </head>
+
+  <body>
+    <header>
+        <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+            <div class="container is-fluid">
+                <div class="navbar-brand">
+                    <a class="navbar-item has-text-weight-bold is-size-4" href="index.html">
+                        Eco Tech<i class="fa-solid fa-leaf"></i>
+                    </a>
+                    <button class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="main-navbar">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div id="main-navbar" class="navbar-menu">
+                    <div class="navbar-end">
+                        <a class="navbar-item has-text-weight-bold" href="index.html">Inicio</a>
+                        <a class="navbar-item has-text-weight-bold" href="depositosResiduos.html">Depositos</a>
+                        <a class="navbar-item has-text-weight-bold" href="logistica.html">Panel de Logistica</a>
+                        <a class="navbar-item has-text-weight-bold" href="ordenes-retiro.html">Ordenes de retiro</a>
+                        <a class="navbar-item has-text-weight-bold is-active" href="auditoria.html">Dashboard de
+                            Auditoria</a>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="is-flex-grow-1 py-5">
+        <section class="container">
+            <header class="has-text-centered mb-5">
+                <h1 class="title is-2 mb-2">Nuevo Deposito</h1>
+                <p class="subtitle is-5 has-text-grey">Ingresar deposito de residuo</p>
+            </header>
+
+            <section class="columns is-centered px-3">
+                <div class="column is-6-desktop is-8-tablet">
+                    <form id="form-deposito" class="box p-5 mb-4" style="border-top: 4px solid #00d1b2;">
+                        <div class="field">
+                            <label class="label" for="containerId">ID del Contenedor</label>
+                            <div class="control has-icons-left">
+                                <input class="input is-rounded" name="containerId" type="number" id="containerId"
+                                    min="1" placeholder="Ej: 1" required>
+                                <span class="icon is-small is-left">
+                                    <i class="fa-solid fa-dumpster"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label" for="dniVecino">DNI del Vecino</label>
+                            <div class="control has-icons-left">
+                                <input class="input is-rounded" name="dniVecino" id="dniVecino"
+                                    placeholder="Ej: 12345678" maxlength="8" inputmode="numeric" pattern="[0-9]{7,8}"
+                                    required>
+                                <span class="icon is-small is-left">
+                                    <i class="fa-solid fa-id-card"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label for="tipoResiduo" class="label">Tipo de residuo</label>
+                            <div class="control has-icons-left">
+                                <div class="select is-rounded is-focused is-fullwidth">
+                                    <select name="tipoResiduo" id="tipoResiduo" required>
+                                        <option value="" disabled selected>Seleccionar...</option>
+                                        <option value="plastico">Plastico (10 pts/kg)</option>
+                                        <option value="carton">Carton (5 pts/kg)</option>
+                                        <option value="vidrio">Vidrio (15 pts/kg)</option>
+                                        <option value="metal">Metal (20 pts/kg)</option>
+                                    </select>
+                                </div>
+                                <span class="icon is-small is-left">
+                                    <i class="fa-solid fa-recycle"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="field mb-5">
+                            <label class="label" for="pesoIngresado">Peso (kg)</label>
+                            <div class="control has-icons-left">
+                                <input class="input is-rounded" name="pesoIngresado" type="number" id="pesoIngresado"
+                                    placeholder="Ej: 2" required>
+                                <span class="icon is-small is-left">
+                                    <i class="fa-solid fa-weight-scale"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <button class="button is-primary is-rounded is-fullwidth has-text-weight-bold"
+                                    type="submit">
+                                    <i class="fa-solid fa-paper-plane mr-2"></i> Registro Depósito
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div id="notificacion" class="notification is-hidden">
+                        <button class="delete"></button>
+                        <p id="notificacion-texto"></p>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>EcoTech</strong> - Trabajo Practico Integrador. Grupo 404 not
+          found.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const burger = document.querySelector(".navbar-burger");
+        const menu = document.getElementById(burger.dataset.target);
+
+        burger.addEventListener("click", () => {
+          burger.classList.toggle("is-active");
+          menu.classList.toggle("is-active");
+        });
+      });
+    </script>
+  </body>
+</html>
