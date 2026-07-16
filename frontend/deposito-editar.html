@@ -17,7 +17,7 @@
     <script type="module" defer src="js/editarDeposito.js"></script>
   </head>
 
-  <body>
+  <body class="is-flex is-flex-direction-column" style="min-height: 100vh;">
     <header>
         <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
             <div class="container is-fluid">
@@ -42,18 +42,14 @@
                     </div>
                 </div>
             </div>
-          </div>
-        </div>
-      </nav>
+        </nav>
     </header>
 
-    <main class="section">
+    <main class="section is-flex-grow-1">
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-6">
-            <!-- CABECERA ALINEADA CON EL FORMULARIO -->
             <div class="level mb-6">
-              <!-- Lado izquierdo: Textos -->
               <div class="level-left">
                 <div class="level-item">
                   <div>
@@ -65,7 +61,6 @@
                 </div>
               </div>
 
-              <!-- Lado derecho: Botón -->
               <div class="level-right">
                 <div class="level-item">
                   <a href="depositosResiduos.html" class="button is-primary">
@@ -75,10 +70,9 @@
                 </div>
               </div>
             </div>
-            <!-- FIN CABECERA -->
 
-            <!-- FORMULARIO -->
-            <form id="form-editar-deposito">
+            <div class="box p-5" style="border-top: 4px solid #00d1b2;">
+              <form id="form-editar-deposito">
               <div class="field">
                 <label class="label" for="containerId">ID del Contenedor</label>
                 <div class="control">
@@ -132,6 +126,7 @@
                 </div>
               </div>
             </form>
+            </div>
 
             <div id="notificacion" class="notification is-hidden mt-4">
               <button class="delete"></button>
@@ -142,12 +137,9 @@
       </div>
     </main>
 
-    <footer class="footer">
-      <div class="content has-text-centered">
-        <p>
-          <strong>EcoTech</strong> - Trabajo Practico Integrador. Grupo 404 not
-          found.
-        </p>
+    <footer class="footer is-flex is-align-items-center is-justify-content-center" style="height: 50px;">
+      <div class="content has-text-centered m-0">
+        <p><strong>EcoTech</strong> - Trabajo Practico Integrador. Grupo 404 not found.</p>
       </div>
     </footer>
 

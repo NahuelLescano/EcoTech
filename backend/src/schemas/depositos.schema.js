@@ -19,7 +19,7 @@ export const validarDepositoSchema = (datos) => {
   // Valido tipo de datos y rangos
 
   if (datos.pesoIngresado <= 0) {
-    errores.push("El peso ingresado debe ser mayor o igual a 0");
+    errores.push("El peso ingresado debe ser mayor a 0");
   }
 
   return { valido: errores.length === 0, errores };

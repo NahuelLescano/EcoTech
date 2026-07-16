@@ -15,7 +15,6 @@ const ordenesRetiroRouter = Router();
 ordenesRetiroRouter
   .get("/", listarOrdenes)
   .get("/pendientes", listarOrdenesPendientes)
-  .get("/todas", listarOrdenes)
   .post("/", middlewareValidarOrdenRetiro, programarOrdenRetiro)
   .put("/:id", middlewareValidarOrdenRetiro, actualizarOrdenRetiro)
   .delete("/:id", eliminarOrdenRetiro)

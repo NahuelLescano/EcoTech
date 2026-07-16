@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="es">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,9 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.4/css/bulma.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
     <script type="module" defer src="js/auditoria.js"></script>
-  </head>
+</head>
 
-<body class="is-flex is-flex-direction-column" style="min-height: 100hv;">
+<body class="is-flex is-flex-direction-column" style="min-height: 100vh;">
     <header>
         <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
             <div class="container is-fluid">
@@ -35,19 +36,67 @@
                     </div>
                 </div>
             </div>
-          </div>
-        </div>
-      </nav>
+        </nav>
     </header>
 
-    <main class="is-flex-grow-1 is-flex is-align-items-center is-justify-content-center">
+    <main class="is-flex-grow-1">
         <section class="section">
-            <div class="container has-text-centered box p-6" style="max-width: 600px; border-top: 4px solid #00d1b2;">
-                <div class="block is-size-1 mb-4">
-                    <i class="fa-solid fa-chart-line has-text-primary"></i>
+            <div class="container is-fluid">
+                <header class="has-text-centered mb-5">
+                    <h1 class="title is-2 mb-2">
+                        <i class="fa-solid fa-chart-line has-text-primary mr-3"></i>Dashboard de Auditoría
+                    </h1>
+                    <p class="subtitle is-5 has-text-grey">Monitoreo y control de actividad del sistema.</p>
+                </header>
+
+                <hr class="has-background-light mb-6" />
+
+                <div class="columns is-multiline mb-5">
+                    <div class="column is-4">
+                        <div class="box has-text-centered">
+                            <p class="heading">Total Depósitos</p>
+                            <p class="title is-2" id="total-depositos">0</p>
+                        </div>
+                    </div>
+                    <div class="column is-4">
+                        <div class="box has-text-centered">
+                            <p class="heading">Puntos Totales</p>
+                            <p class="title is-2 has-text-success" id="total-puntos">0</p>
+                        </div>
+                    </div>
+                    <div class="column is-4">
+                        <div class="box has-text-centered">
+                            <p class="heading">Promedio Puntos/Depósito</p>
+                            <p class="title is-2 has-text-info" id="promedio-puntos">0</p>
+                        </div>
+                    </div>
                 </div>
-                <h1 class="title is-2 mb-3">Dashboard de Auditoria</h1>
-                <p class="subtitle is-5 has-text-grey mb-5">Monitoreo y control de actividad.</p>
+
+                <div class="box">
+                    <h2 class="title is-5 mb-4">Histórico de Depósitos</h2>
+
+                    <div class="table-container">
+                        <table class="table is-fullwidth is-striped is-hoverable is-narrow">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Contenedor</th>
+                                    <th>Barrio</th>
+                                    <th>Residuo</th>
+                                    <th>DNI</th>
+                                    <th>Peso</th>
+                                    <th>Puntos</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody id="body-depositos"></tbody>
+                        </table>
+                    </div>
+
+                    <div id="sin-depositos" class="notification is-info is-hidden">
+                        <p><i class="fa-solid fa-inbox mr-2"></i>No hay depósitos registrados.</p>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -59,15 +108,16 @@
     </footer>
 
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const burger = document.querySelector(".navbar-burger");
-        const menu = document.getElementById(burger.dataset.target);
+        document.addEventListener("DOMContentLoaded", () => {
+            const burger = document.querySelector(".navbar-burger");
+            const menu = document.getElementById(burger.dataset.target);
 
-        burger.addEventListener("click", () => {
-          burger.classList.toggle("is-active");
-          menu.classList.toggle("is-active");
+            burger.addEventListener("click", () => {
+                burger.classList.toggle("is-active");
+                menu.classList.toggle("is-active");
+            });
         });
-      });
     </script>
-  </body>
+</body>
+
 </html>

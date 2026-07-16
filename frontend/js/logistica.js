@@ -1,6 +1,7 @@
 import { API_CONTENEDORES } from "../env.js";
 
 const grid = document.getElementById("contenedores-grid");
+const loading = document.getElementById("loading");
 const notificacion = document.getElementById("notificacion");
 const notificacionTexto = document.getElementById("notificacion-texto");
 const btnDelete = notificacion.querySelector(".delete");
@@ -101,6 +102,8 @@ async function cargarContenedoresHub() {
     contenedoresHub = [];
     renderizarContenedoresHub();
     mostrarNotificacion("No se pudieron cargar los contenedores", "is-danger");
+  } finally {
+    if (loading) loading.classList.add("is-hidden");
   }
 }
 
